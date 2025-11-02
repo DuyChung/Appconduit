@@ -1,0 +1,28 @@
+<div class="banner">
+   <h1 class="Text">conduit</h1>
+  <p class="title">A place to share your knowledge.</p> </div>
+<nav class="detail">
+<div class="home-page">
+  <div class="feed">
+    <h3 style="color: green;font-size: 15px;text-decoration: underline;text-underline-offset: 5px;
+">Global Feed</h3>
+    <div *ngFor="let article of articles" class="article-preview">
+      <div class="meta">
+        <img class="avatar"src="/src/image/avatar.jfif">
+        <p><b>{{ article.author }}</b><br> <b class="date">{{ article.date }}</b></p>
+      </div>
+      <h2>{{ article.title }}</h2>
+      <p>{{ article.desc }}</p>
+      <li><a href="/">Read more...</a></li>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <h4>Popular Tags</h4>
+    <div class="tag-list">
+      <span *ngFor="let tag of tags" class="tag-pill">{{ tag }}</span>
+    </div>
+  </div>
+ 
+</div>
+ </nav>

@@ -1,0 +1,55 @@
+.detail{
+ background-color: rgb(254, 250, 250);
+  border-bottom: 1px solid #ddd;
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+  .home-page{
+   // justify-content :space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  height: 80vh;
+  }
+  .feed{
+   flex:2;
+     background: #fffbfb;
+//   padding: 10px;
+
+.meta{
+   color: green;
+ .avatar{
+   border-radius: 50%;
+ }
+   .date{
+         color: rgb(157, 156, 156);
+         font-size: 10px;
+      }
+   }
+}
+  }
+  .sidebar{
+   flex: 1;
+     background: #d6d7d7;
+  padding: 20px;
+  }
+
+
+  .banner{
+    align-content: center;
+    background-color: rgb(70, 161, 91);
+    height: 20ch;
+  border-bottom: 1px solid #d4cdcd;
+ justify-items: center;
+ .Text{
+    font-size: 55px;
+    color: rgb(249, 251, 252);
+    font-weight: bolder;
+    font-style :unset;
+ }
+ .title{
+    color: rgb(249, 251, 252);
+    font-size: 25px;
+    font-style: normal;
+ }
+  }
