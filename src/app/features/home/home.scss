@@ -1,51 +1,157 @@
 .detail {
-  background-color: rgb(254, 250, 250);
+  background-color: #fff;
   border-bottom: 1px solid #ddd;
   padding: 0.8rem 2rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+
   .home-page {
-     display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 80vh;
-  }
-  .feed {
-    flex: 2;
-    background: #fffbfb;
-    .meta {
-      color: green;
-      .avatar {
-        border-radius: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+
+    /* === FEED CHÍNH === */
+    .feed {
+      flex: 1;
+      max-width: 70%;
+      margin-right: 20px;
+      background-color: #fff;
+    }
+
+    /* === BÀI VIẾT === */
+    .article-preview {
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+
+      .meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        .meta-left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .author-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+
+            .author-name {
+              font-weight: bold;
+              font-size: 0.95rem;
+            }
+
+            .date {
+              font-size: 0.8rem;
+              color: #777;
+            }
+          }
+        }
+
+        /* === NÚT TIM (LIKE) === */
+        .article-actions {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #5cb85c;
+          color: #5cb85c;
+          border-radius: 4px;
+          padding: 4px 8px;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .article-actions:hover {
+          background-color: #5cb85c;
+          color: #fff;
+        }
+
+        .like-btn {
+          background: none;
+          border: none;
+          font-size: 1.1rem;
+          cursor: pointer;
+          color: inherit;
+        }
       }
-      .date {
-        color: rgb(157, 156, 156);
-        font-size: 10px;
+
+      h2 {
+        margin: 5px 0;
+        font-size: 1.25rem;
+        color: #333;
+      }
+
+      p {
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .Read {
+        color: #b4b0b0;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      .Read:hover {
+        color: #5cb85c;
       }
     }
   }
 }
+
+/* === THANH BÊN TAG === */
 .sidebar {
-  flex: 1;
-  background: #d6d7d7;
-  padding: 20px;
+  width: 250px;
+  flex-shrink: 0;
+  background-color: #f3f3f3;
+  padding: 1.25rem 0.625rem;
+  border-radius: 4px;
+  min-height: 100%;
+  align-self: stretch;
+
+  h4 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
 }
 
+/* === BANNER === */
 .banner {
   align-content: center;
   background-color: rgb(70, 161, 91);
   height: 20ch;
   border-bottom: 1px solid #d4cdcd;
   justify-items: center;
+  text-align: center;
+  display: grid;
+  place-content: center;
+
   .Text {
     font-size: 55px;
-    color: rgb(249, 251, 252);
+    color: #f9fbfc;
     font-weight: bolder;
-    font-style: unset;
+    margin-bottom: 0.5rem;
   }
+
   .title {
-    color: rgb(249, 251, 252);
-    font-size: 25px;
-    font-style: normal;
+    color: #f9fbfc;
+    font-size: 1.5rem;
   }
 }

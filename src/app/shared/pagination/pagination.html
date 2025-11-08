@@ -1,0 +1,29 @@
+<nav class="pagination">
+  <ul class="pagination-list">
+    <li
+      class="arrow"
+      [class.disabled]="currentPage === 1"
+      (click)="setPage(currentPage - 1)">
+      ‹
+    </li>
+
+    @for (page of pages(); track $index) {
+      @if (page === -1) {
+        <li class="dots">...</li>
+      } @else {
+        <li
+          [class.active]="page === currentPage"
+          (click)="setPage(page)">
+          {{ page }}
+        </li>
+      }
+    }
+
+    <li
+      class="arrow"
+      [class.disabled]="currentPage === totalPages"
+      (click)="setPage(currentPage + 1)">
+      ›
+    </li>
+  </ul>
+</nav>
