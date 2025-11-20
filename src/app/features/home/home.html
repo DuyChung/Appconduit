@@ -15,31 +15,43 @@
       >
         Global Feed
       </h3>
-      @for ( article of articles; track article.title){
+      @for (article of articles; track article.title) {
+        <div class="article-preview">
+          <div class="meta">
+            <div class="meta-left">
+              <img class="avatar" src="avatar.jfif" />
+              <div class="author-info">
+                <b class="author-name">{{ article.author }}</b>
+                <div class="date">{{ article.date }}</div>
+              </div>
+            </div>
 
-      <div class="article-preview">
-        <div class="meta">
-          <img class="avatar" src="/src/image/avatar.jfif" />
-          <p>
-            <b>{{ article.author }}</b
-            ><br />
-            <b class="date">{{ article.date }}</b>
-          </p>
+            <div class="article-actions">
+              <button class="like-btn">❤️</button>
+            </div>
+          </div>
+
+          <h2>{{ article.title }}</h2>
+          <p>{{ article.desc }}</p>
+          <a routerLink="/readmore" class="Read">Read more...</a>
         </div>
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.desc }}</p>
-        <li><a href="/">Read more...</a></li>
-      </div>
       }
     </div>
 
     <div class="sidebar">
       <h4>Popular Tags</h4>
       <div class="tag-list">
-        @for (tag of tags; track tag){
-        <span>{{ tag }}</span>
+        @for (tag of tags; track tag) {
+          <app-tag-list [tag]="tag"></app-tag-list>
         }
       </div>
     </div>
   </div>
+  <app-pagination
+    [totalPages]="totalPages"
+    [currentPage]="currentPage"
+    (pageChange)="loadArticles($event)"
+  >
+  </app-pagination>
+  <app-footer></app-footer>
 </nav>

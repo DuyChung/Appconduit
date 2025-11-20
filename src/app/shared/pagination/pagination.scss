@@ -1,0 +1,36 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination-list li {
+  cursor: pointer;
+  padding: 6px 10px;
+  border: 1px solid black;
+  color: black;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.pagination-list li.active {
+  background-color: black;
+  color: white;
+}
+
+.pagination-list li.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.pagination-list li.dots {
+  border: none;
+  color: #aaa;
+  cursor: default;
+}
