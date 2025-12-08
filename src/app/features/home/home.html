@@ -47,11 +47,6 @@
       </div>
     </div>
   </div>
-  <app-pagination
-    [totalPages]="totalPages"
-    [currentPage]="currentPage"
-    (pageChange)="loadArticles($event)"
-  >
-  </app-pagination>
+  <app-pagination [totalPages]="10" [pageActive]="currentPage"> </app-pagination>
   <app-footer></app-footer>
 </nav>

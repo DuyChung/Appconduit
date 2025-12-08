@@ -1,36 +1,21 @@
-.pagination {
+.container {
+  justify-items: center;
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
+  width: fit-content;
 
-.pagination-list {
-  display: flex;
-  list-style: none;
-  padding: 0;
-}
+  .page {
+    width: 30px;
+    height: 30px;
+    border: 0.5px solid rgb(203, 202, 202);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(84, 83, 83);
+    cursor: pointer;
 
-.pagination-list li {
-  cursor: pointer;
-  padding: 6px 10px;
-  border: 1px solid black;
-  color: black;
-  user-select: none;
-  transition: all 0.2s ease;
-}
-
-.pagination-list li.active {
-  background-color: black;
-  color: white;
-}
-
-.pagination-list li.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.pagination-list li.dots {
-  border: none;
-  color: #aaa;
-  cursor: default;
+    &.active {
+      background-color: greenyellow;
+      color: white;
+    }
+  }
 }

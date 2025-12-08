@@ -34,3 +34,4 @@ export class Home {
     console.log('Load trang', page);
   }
 }
+
