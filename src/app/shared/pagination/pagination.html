@@ -1,29 +1,15 @@
-<nav class="pagination">
-  <ul class="pagination-list">
-    <li
-      class="arrow"
-      [class.disabled]="currentPage === 1"
-      (click)="setPage(currentPage - 1)">
-      ‹
-    </li>
+<div class="container">
+  <div class="page" (click)="clickBackward()"><</div>
 
-    @for (page of pages(); track $index) {
-      @if (page === -1) {
-        <li class="dots">...</li>
-      } @else {
-        <li
-          [class.active]="page === currentPage"
-          (click)="setPage(page)">
-          {{ page }}
-        </li>
-      }
-    }
+  @for (item of pages(); track $index) {
+    <div
+      class="page"
+      [class.active]="item === pageActive()"
+      (click)="typeof item === 'number' && clickPage(item)"
+    >
+      {{ item }}
+    </div>
+  }
 
-    <li
-      class="arrow"
-      [class.disabled]="currentPage === totalPages"
-      (click)="setPage(currentPage + 1)">
-      ›
-    </li>
-  </ul>
-</nav>
+  <div class="page" (click)="clickForward()">></div>
+</div>
