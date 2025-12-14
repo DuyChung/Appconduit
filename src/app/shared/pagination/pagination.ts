@@ -15,7 +15,6 @@ export class PaginationComponent {
   pages = computed(() => {
     const total = this.totalPages();
     const current = this.pageActive();
-    const out: (number | string)[] = [];
 
     if (total <= 8) {
       return Array.from({ length: total }, (_, i) => i + 1);

@@ -2,51 +2,28 @@
   <h1 class="Text">conduit</h1>
   <p class="title">A place to share your knowledge.</p>
 </div>
-<nav class="detail">
-  <div class="home-page">
-    <div class="feed">
-      <h3
-        style="
-          color: green;
-          font-size: 15px;
-          text-decoration: underline;
-          text-underline-offset: 5px;
-        "
-      >
-        Global Feed
-      </h3>
-      @for (article of articles; track article.title) {
-        <div class="article-preview">
-          <div class="meta">
-            <div class="meta-left">
-              <img class="avatar" src="avatar.jfif" />
-              <div class="author-info">
-                <b class="author-name">{{ article.author }}</b>
-                <div class="date">{{ article.date }}</div>
-              </div>
-            </div>
 
-            <div class="article-actions">
-              <button class="like-btn">❤️</button>
-            </div>
-          </div>
-
-          <h2>{{ article.title }}</h2>
-          <p>{{ article.desc }}</p>
-          <a routerLink="/readmore" class="Read">Read more...</a>
+<div class="detail">
+  <div class="container">
+    <div class="home-page">
+      <div class="feed">
+        <h3 class="global-feed">Global Feed</h3>
+        <app-article-list [articles]="articles"></app-article-list>
+      </div>
+      <div class="sidebar">
+        <h4>Popular Tags</h4>
+        <div class="tag-list">
+          @for (tag of tags; track tag) {
+            <app-tag-list [tag]="tag"></app-tag-list>
+          }
         </div>
-      }
-    </div>
-
-    <div class="sidebar">
-      <h4>Popular Tags</h4>
-      <div class="tag-list">
-        @for (tag of tags; track tag) {
-          <app-tag-list [tag]="tag"></app-tag-list>
-        }
       </div>
     </div>
+    <app-pagination
+      class="Pagination"
+      [totalPages]="100"
+      [pageActive]="currentPage"
+    ></app-pagination>
+    <app-footer></app-footer>
   </div>
-  <app-pagination [totalPages]="10" [pageActive]="currentPage"> </app-pagination>
-  <app-footer></app-footer>
-</nav>
+</div>

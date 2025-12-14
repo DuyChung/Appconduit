@@ -2,14 +2,17 @@
   <div class="page" (click)="clickBackward()"><</div>
 
   @for (item of pages(); track $index) {
-    <div
-      class="page"
-      [class.active]="item === pageActive()"
-      (click)="typeof item === 'number' && clickPage(item)"
-    >
-      {{ item }}
-    </div>
+   @if (typeof item === 'number') {
+      <div
+        class="page"
+        [class.active]="item === pageActive()"
+        (click)="clickPage(item)"
+      >
+        {{ item }}
+      </div>
+    } @else {
+      <span class="dots">...</span>
+    }
   }
-
   <div class="page" (click)="clickForward()">></div>
 </div>
