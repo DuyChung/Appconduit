@@ -12,13 +12,14 @@ export class PaginationComponent {
   totalPages = input.required<number>();
   pageActive = model.required<number>();
 
-  pages = computed(() => {
+  pages = computed<(number | string)[]>(() => {
     const total = this.totalPages();
     const current = this.pageActive();
 
     if (total <= 8) {
       return Array.from({ length: total }, (_, i) => i + 1);
     }
+
     if (current <= 4) {
       return [1, 2, 3, 4, 5, '...', total];
     }
@@ -36,13 +37,13 @@ export class PaginationComponent {
 
   clickBackward() {
     if (this.pageActive() > 1) {
-      this.pageActive.update((v) => v - 1);
+      this.pageActive.update(v => v - 1);
     }
   }
 
   clickForward() {
     if (this.pageActive() < this.totalPages()) {
-      this.pageActive.update((v) => v + 1);
+      this.pageActive.update(v => v + 1);
     }
   }
 }
