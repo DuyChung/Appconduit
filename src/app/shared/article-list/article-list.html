@@ -1,0 +1,21 @@
+   @for (article of articles; track article.title) {
+        <div class="article-preview">
+          <div class="meta">
+            <div class="meta-left">
+              <img class="avatar" src="avatar.jfif" />
+              <div class="author-info">
+                <b class="author-name">{{ article.author }}</b>
+                <div class="date">{{ article.date }}</div>
+              </div>
+            </div>
+            <div class="article-actions">
+              <button class="like-btn">❤️</button>
+            </div>
+          </div>
+
+          <h2>{{ article.title }}</h2>
+          <p>{{ article.desc }}</p>
+          <a routerLink="/readmore" class="Read">Read more...</a>
+        </div>
+      }
+

@@ -2,7 +2,12 @@
   justify-items: center;
   display: flex;
   width: fit-content;
-
+  .dots {
+    margin: 0 12px;
+    color: #999;
+    font-weight: bold;
+    user-select: none;
+  }
   .page {
     width: 30px;
     height: 30px;

@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PaginationComponent } from './pagination';
 
-describe('PaginationComponent', () => {
-  let component: PaginationComponent;
-  let fixture: ComponentFixture<PaginationComponent>;
+import { ArticleList } from './article-list';
+
+describe('ArticleList', () => {
+  let component: ArticleList;
+  let fixture: ComponentFixture<ArticleList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaginationComponent]
+      imports: [ArticleList]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PaginationComponent);
+    fixture = TestBed.createComponent(ArticleList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -20,3 +21,4 @@ describe('PaginationComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

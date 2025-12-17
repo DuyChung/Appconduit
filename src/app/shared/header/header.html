@@ -1,10 +1,33 @@
 <nav class="navbar">
   <div class="container">
-    <a href="/" class="logo">Conduit</a>
+    <div class="left">
+      <a routerLink="/" class="logo">conduit</a>
+
+      <a href="https://github.com/DuyChung/Appconduit" class="source" target="_blank">
+        <i class="fa-brands fa-github"></i>
+        Source code
+      </a>
+    </div>
+
     <ul class="nav">
-      <li><a href="/">Home</a></li>
-      <li><a href="#">Sign in</a></li>
-      <li><a href="#">Sign up</a></li>
+      <li>
+        <a routerLink="/">
+          <i class="fa-solid fa-house"></i>
+          Home
+        </a>
+      </li>
+      <li>
+        <a routerLink="#">
+          <i class="fa-solid fa-pen-to-square"></i>
+          Sign in
+        </a>
+      </li>
+      <li>
+        <a routerLink="#">
+          <i class="fa-solid fa-user-plus"></i>
+          Sign up
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

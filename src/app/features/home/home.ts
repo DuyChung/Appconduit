@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { TagList } from '../../shared/tag-list/tag-list';
 import { Footer } from '../../shared/footer/footer';
 import { PaginationComponent } from '../../shared/pagination/pagination';
-import { RouterLink } from "@angular/router";
-import { ArticlePreview } from "../../shared/article-preview/article-preview";
+import { ArticleListComponent } from "../../shared/article-list/article-list";
 
 @Component({
   selector: 'app-home',
-  imports: [TagList, Footer, PaginationComponent, RouterLink],
+  imports: [TagList, Footer, PaginationComponent, ArticleListComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

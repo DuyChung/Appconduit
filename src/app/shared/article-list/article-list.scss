@@ -1,0 +1,87 @@
+
+.article-preview {
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+
+  .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .author-info {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+
+        .author-name {
+          font-weight: bold;
+          font-size: 0.95rem;
+        }
+
+        .date {
+          font-size: 0.8rem;
+          color: #777;
+        }
+      }
+    }
+    .article-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #5cb85c;
+      color: #5cb85c;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .article-actions:hover {
+      background-color: #5cb85c;
+      color: #fff;
+    }
+
+    .like-btn {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: inherit;
+    }
+  }
+
+  h2 {
+    margin: 5px 0;
+    font-size: 1.25rem;
+    color: #333;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .Read {
+    color: gainsboro;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .Read:hover {
+    color: #5cb85c;
+  }
+}
