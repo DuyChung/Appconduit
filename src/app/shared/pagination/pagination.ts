@@ -37,13 +37,13 @@ export class PaginationComponent {
 
   clickBackward() {
     if (this.pageActive() > 1) {
-      this.pageActive.update(v => v - 1);
+      this.pageActive.update((v) => v - 1);
     }
   }
 
   clickForward() {
     if (this.pageActive() < this.totalPages()) {
-      this.pageActive.update(v => v + 1);
+      this.pageActive.update((v) => v + 1);
     }
   }
 }

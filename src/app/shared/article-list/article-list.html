@@ -1,4 +1,4 @@
-@for (article of articles; track article.title) {
+@for (article of articles(); track article.id) {
   <div class="article-preview">
     <div class="meta">
       <div class="meta-left">
@@ -12,11 +12,9 @@
         <button class="like-btn">❤️</button>
       </div>
     </div>
-
     <h2>{{ article.title }}</h2>
     <p>{{ article.desc }}</p>
-    <a routerLink="/readmore" class="Read">Read more...</a>
+    <a routerLink="/readmore" class="read">Read more...</a>
   </div>
 }
-
-<app-pagination class="Pagination" [totalPages]="100" [(pageActive)]="currentPage"></app-pagination>
+<app-pagination [totalPages]="100" [(pageActive)]="currentPage"></app-pagination>
