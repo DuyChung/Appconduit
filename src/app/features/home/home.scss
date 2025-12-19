@@ -1,51 +1,68 @@
 .detail {
-  background-color: rgb(254, 250, 250);
+  background-color: #fff;
   border-bottom: 1px solid #ddd;
   padding: 0.8rem 2rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+
   .home-page {
-     display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 80vh;
-  }
-  .feed {
-    flex: 2;
-    background: #fffbfb;
-    .meta {
-      color: green;
-      .avatar {
-        border-radius: 50%;
-      }
-      .date {
-        color: rgb(157, 156, 156);
-        font-size: 10px;
-      }
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    .global-feed {
+      color: rgb(6, 197, 6);
+      font-size: 1rem;
+      text-decoration-line: underline;
+      text-underline-offset: 6px;
+    }
+    .feed {
+      flex: 1;
+      max-width: 70%;
+      margin-right: 20px;
+      background-color: #fff;
     }
   }
 }
 .sidebar {
-  flex: 1;
-  background: #d6d7d7;
-  padding: 20px;
-}
+  width: 250px;
+  flex-shrink: 0;
+  background-color: #f3f3f3;
+  padding: 1.25rem 0.625rem;
+  border-radius: 4px;
+  min-height: 100%;
+  align-self: stretch;
 
+  h4 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #555;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}
 .banner {
   align-content: center;
   background-color: rgb(70, 161, 91);
   height: 20ch;
   border-bottom: 1px solid #d4cdcd;
   justify-items: center;
-  .Text {
+  text-align: center;
+  display: grid;
+  place-content: center;
+
+  .text {
     font-size: 55px;
-    color: rgb(249, 251, 252);
+    color: #f9fbfc;
     font-weight: bolder;
-    font-style: unset;
+    margin-bottom: 0.5rem;
   }
+
   .title {
-    color: rgb(249, 251, 252);
-    font-size: 25px;
-    font-style: normal;
+    color: #f9fbfc;
+    font-size: 1.5rem;
   }
 }
+

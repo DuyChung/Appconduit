@@ -1,0 +1,28 @@
+.container {
+  justify-items: center;
+  display: flex;
+  width: fit-content;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  .dots {
+    margin: 0 12px;
+    color: #999;
+    font-weight: bold;
+    user-select: none;
+  }
+  .page {
+    width: 30px;
+    height: 30px;
+    border: 0.5px solid rgb(203, 202, 202);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(84, 83, 83);
+    cursor: pointer;
+
+    &.active {
+      background-color: greenyellow;
+      color: white;
+    }
+  }
+}
