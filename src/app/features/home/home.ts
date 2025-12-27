@@ -1,35 +1,38 @@
-import { Component } from '@angular/core';
-import { TagList } from '../../shared/tag-list/tag-list';
-import { Footer } from '../../shared/footer/footer';
-import { ArticleListComponent } from "../../shared/article-list/article-list";
+import { Component, signal } from '@angular/core';
+import { TagList } from '../../shared/components/tag-list/tag-list';
+import { Footer } from '../../shared/components/footer/footer';
+import { ArticleListComponent } from '../../shared/components/article-list/article-list';
+import { ArticleService } from '../../shared/services/article';
+import { Article } from '../../shared/models/article.model';
+import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../shared/components/pagination/pagination';
 
 @Component({
   selector: 'app-home',
-  imports: [TagList, Footer, ArticleListComponent],
+  standalone: true,
+  imports: [CommonModule, TagList, Footer, ArticleListComponent, PaginationComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class Home {
-  articles = [
-    {
-      author: 'pradaman',
-      title: 'Celular xiaomi',
-      desc: 'bài tập hôm nay là về ',
-      date: 'October 31, 2025',
-    },
-    {
-      author: 'testuser1761745955343',
-      title: 'Original Title',
-      desc: 'Original Description',
-      date: 'October 29, 2025',
-    },
-  ];
-  tags = ['frontend', 'backend', 'science', 'angular', 'typescript', 'test', 'example'];
-  currentPage = 1;
-  totalPages = 1099;
-  loadArticles(page: number) {
-    this.currentPage = page;
-    console.log('Load trang', page);
+  currentPage = signal(1);
+  totalPages = signal(100);
+  articles = signal<Article[]>([]);
+  tags = ['frontend', 'backend', 'science', 'angular', 'typescript'];
+  limit = 3;
+  page = 1;
+
+  constructor(private articleService: ArticleService) {}
+
+  ngOnInit() {
+    this.loadArticles();
+  }
+
+  loadArticles() {
+    const offset = (this.page - 1) * this.limit;
+
+    this.articleService.getArticles(this.limit, offset).subscribe((res) => {
+      this.articles.set(res.articles);
+    });
   }
 }
-
