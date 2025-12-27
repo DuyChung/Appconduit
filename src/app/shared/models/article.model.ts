@@ -1,8 +1,15 @@
+import { Author } from './author.model';
+
 export interface Article {
-  id: number;
+  image: string;
+  slug: string;
   title: string;
-  desc: string;
-  author: string;
-  thumbnail: string;
-  date: string;
+  description: string;
+  body: string;
+  tagList: string[];
+  createdAt: string;
+  updatedAt: string;
+  favorited: boolean;
+  favoritesCount: number;
+  author: Author;
 }
