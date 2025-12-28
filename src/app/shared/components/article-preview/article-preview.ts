@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Article } from '../../models/article.model';
@@ -11,5 +11,5 @@ import { Article } from '../../models/article.model';
   styleUrls: ['./article-preview.scss'],
 })
 export class ArticlePreviewComponent {
-  @Input({ required: true }) article!: Article;
+  readonly article = input.required<Article>();
 }

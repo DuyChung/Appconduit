@@ -11,5 +11,5 @@ import { ArticlePreviewComponent } from "../article-preview/article-preview";
   styleUrls: ['./article-list.scss'],
 })
 export class ArticleListComponent {
-  readonly articles = input<Article[]>([]);
+   readonly articles = input.required<Article[]>();
 }

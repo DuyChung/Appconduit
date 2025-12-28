@@ -1,35 +1,26 @@
 <div class="article-preview">
   <div class="meta">
     <div class="meta-left">
-      <img
-        class="avatar"
-        [src]="article.author.image || 'avatar.jfif'"
-        alt="author avatar"
-      />
+      <img class="avatar" [src]="article().author.image || 'avatar.jfif'" alt="author avatar" />
 
       <div class="author-info">
         <b class="author-name">
-          {{ article.author.username }}
+          {{ article().author.username }}
         </b>
 
         <div class="date">
-          {{ article.createdAt | date: 'mediumDate' }}
+          {{ article().createdAt | date: 'mediumDate' }}
         </div>
       </div>
     </div>
 
     <div class="article-actions">
-      <button class="like-btn">❤️ {{ article.favoritesCount }}</button>
+      <button class="like-btn">❤️ {{ article().favoritesCount }}</button>
     </div>
   </div>
 
-  <h2>{{ article.title }}</h2>
-  <p>{{ article.description }}</p>
+  <h2>{{ article().title }}</h2>
+  <p>{{ article().description }}</p>
 
-  <a
-    [routerLink]="['/article-detail', article.slug]"
-    class="read"
-  >
-    Read more
-  </a>
+  <a [routerLink]="['/article', article().slug]" class="read"> Read more </a>
 </div>
