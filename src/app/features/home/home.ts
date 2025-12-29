@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TagList } from '../../shared/components/tag-list/tag-list';
 import { Footer } from '../../shared/components/footer/footer';
 import { ArticleListComponent } from '../../shared/components/article-list/article-list';
@@ -22,17 +22,21 @@ export class Home {
   limit = 3;
   page = 1;
 
-  constructor(private articleService: ArticleService) {}
+  private articleService = inject(ArticleService);
 
   ngOnInit() {
     this.loadArticles();
   }
-
   loadArticles() {
     const offset = (this.page - 1) * this.limit;
 
-    this.articleService.getArticles(this.limit, offset).subscribe((res) => {
-      this.articles.set(res.articles);
+    this.articleService.getArticles(this.limit, offset).subscribe({
+      next: (res) => {
+        this.articles.set(res.articles);
+      },
+      error: (err) => {
+        console.error('Lỗi load articles:', err);
+      },
     });
   }
 }

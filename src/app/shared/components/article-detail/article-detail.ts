@@ -12,8 +12,8 @@ import { Article } from '../../models/article.model';
   styleUrl: './article-detail.scss',
 })
 export class ArticleDetail implements OnInit {
-  route = inject(ActivatedRoute);
-  articleService = inject(ArticleService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly articleService = inject(ArticleService);
   slug = this.route.snapshot.paramMap.get('slug')!;
   article = signal<Article | null>(null);
 
@@ -22,8 +22,13 @@ export class ArticleDetail implements OnInit {
   }
 
   loadArticle() {
-    this.articleService.getArticleBySlug(this.slug).subscribe((res) => {
-      this.article.set(res.article);
+    this.articleService.getArticleBySlug(this.slug).subscribe({
+      next: (res) => {
+        this.article.set(res.article);
+      },
+      error: (err) => {
+        console.error(' Dây là lỗi load trang article:', err);
+      },
     });
   }
 }

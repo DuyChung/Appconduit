@@ -2,22 +2,26 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Article } from '../models/article.model';
-import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  private API = `${environment.apiUrl}/articles`;
-  private http = inject(HttpClient);
+  private readonly API = '/articles';
+  private readonly http = inject(HttpClient);
 
-  getArticles(limit: number, offset: number): Observable<{ articles: Article[] }> {
-    return this.http.get<{ articles: Article[] }>(this.API, {
+  getArticles(
+    limit: number,
+    offset: number,
+  ): Observable<{ articles: Article[]; articlesCount: number }> {
+    return this.http.get<{ articles: Article[]; articlesCount: number }>(this.API, {
       params: {
         limit,
         offset,
       },
     });
   }
+
   getArticleBySlug(slug: string): Observable<{ article: Article }> {
     return this.http.get<{ article: Article }>(`${this.API}/${slug}`);
   }
