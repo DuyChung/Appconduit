@@ -5,7 +5,7 @@ export function gmailValidator(control: AbstractControl): ValidationErrors | nul
 
   if (!value) return null;
 
-  return value.endsWith('@gmail.com') ? null : { gmail: true };
+  return value.endsWith('@gmail.com') ? null : { gmail: 'Email phải kết thúc bằng @gmail.com' };
 }
 
 export function passwordStrongValidator(control: AbstractControl): ValidationErrors | null {

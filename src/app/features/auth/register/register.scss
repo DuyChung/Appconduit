@@ -1,0 +1,32 @@
+.auth-page {
+  padding-top: 2.5rem;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+  a {
+    color: #5cb85c;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  p {
+    color: #5cb85c;
+    margin-bottom: 2rem;
+  }
+
+  .form-control {
+    border-radius: 5px;
+    box-shadow: none;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+}

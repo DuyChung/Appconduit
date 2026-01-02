@@ -8,12 +8,16 @@
   margin: 0 auto;
   padding: 0 16px;
   height: 56px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
+.user-pic {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
 .left {
   display: flex;
   align-items: center;

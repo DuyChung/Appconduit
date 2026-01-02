@@ -16,18 +16,38 @@
           Home
         </a>
       </li>
-      <li>
-        <a routerLink="/login">
-          <i class="fa-solid fa-pen-to-square"></i>
-          Sign in
-        </a>
-      </li>
-      <li>
-        <a routerLink="#">
-          <i class="fa-solid fa-user-plus"></i>
-          Sign up
-        </a>
-      </li>
+
+      @if (!auth.isLoggedIn()) {
+        <li>
+          <a routerLink="/login">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Login
+          </a>
+        </li>
+        <li>
+          <a routerLink="/register">
+            <i class="fa-solid fa-user-plus"></i>
+            Sign up
+          </a>
+        </li>
+      } @else {
+        <li>
+          <a routerLink="/editor">
+            <i class="fa-solid fa-pen-to-square"></i>
+            New Article
+          </a>
+        </li>
+        <li>
+          <a routerLink="/profile">
+            <i class="fa-solid "></i>
+            <img class="user-pic" [src]="auth.user()?.image || 'avatar.jfif'" alt="user avatar" />
+            {{ auth.user()?.username }}
+          </a>
+        </li>
+        <li>
+          <a (click)="logout()" style="cursor: pointer"> Logout </a>
+        </li>
+      }
     </ul>
   </div>
 </nav>

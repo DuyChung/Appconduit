@@ -2,13 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Article } from '../models/article.model';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  private readonly API = `${environment.apiUrl}/articles`;
+  private readonly API = `/articles`;
   private readonly http = inject(HttpClient);
 
   getArticles(
