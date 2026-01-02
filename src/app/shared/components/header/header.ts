@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthStore } from '../../services/auth.store';
+import { userService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +10,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.scss',
 })
 export class HeaderComponent {
+  readonly auth = inject(AuthStore);
+  readonly dataService = inject(userService);
 
+  logout() {
+    this.dataService.logout();
+  }
 }

@@ -6,41 +6,35 @@
         <p class="text-center auth-link">
           <a routerLink="/register">Need an account?</a>
         </p>
-        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <form [formGroup]="loginForm" (ngSubmit)="submit($event.target)" >
+            @if (emailNotRegistered()) {
+            <ul class="error-messages">
+              <li>Email not found sign in first</li>
+            </ul>
+          }
           <fieldset class="form-group">
             <input
               class="form-control form-control-lg"
               type="email"
               placeholder="Email"
               formControlName="email"
+              required
             />
-
-            @if (emailControl.touched && emailControl.errors?.['gmail']) {
-              <small class="text-danger"> Thiếu @gmail.com rồi </small>
-            }
           </fieldset>
 
           <fieldset class="form-group">
             <input
-              class="form-control form-control-lg"
               type="password"
+              class="form-control form-control-lg"
               placeholder="Password"
               formControlName="password"
+              required
+              minlength="1"
             />
 
-            @if (passwordControl.touched && passwordControl.errors?.['digitCount']) {
-              <small class="text-danger"> Password phải có ít nhất 3 chữ số </small>
-            }
-
-            @if (passwordControl.touched && passwordControl.errors?.['specialChar']) {
-              <small class="text-danger"> Password phải có ít nhất 1 ký tự đặc biệt </small>
-            }
           </fieldset>
 
-          <button
-            class="btn btn-lg btn-primary pull-xs-right"
-            [disabled]="loginForm.invalid || loading()"
-          >
+          <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="loading()">
             Login
           </button>
         </form>
