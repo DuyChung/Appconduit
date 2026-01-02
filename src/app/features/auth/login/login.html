@@ -1,0 +1,50 @@
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h1 class="text-xs-center">Sign in</h1>
+        <p class="text-center auth-link">
+          <a routerLink="/register">Need an account?</a>
+        </p>
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+          <fieldset class="form-group">
+            <input
+              class="form-control form-control-lg"
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+            />
+
+            @if (emailControl.touched && emailControl.errors?.['gmail']) {
+              <small class="text-danger"> Thiếu @gmail.com rồi </small>
+            }
+          </fieldset>
+
+          <fieldset class="form-group">
+            <input
+              class="form-control form-control-lg"
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+
+            @if (passwordControl.touched && passwordControl.errors?.['digitCount']) {
+              <small class="text-danger"> Password phải có ít nhất 3 chữ số </small>
+            }
+
+            @if (passwordControl.touched && passwordControl.errors?.['specialChar']) {
+              <small class="text-danger"> Password phải có ít nhất 1 ký tự đặc biệt </small>
+            }
+          </fieldset>
+
+          <button
+            class="btn btn-lg btn-primary pull-xs-right"
+            [disabled]="loginForm.invalid || loading()"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@
     <div class="home-page">
       <div class="feed">
         <h3 class="global-feed">Global Feed</h3>
-        <app-article-list [articles]="articles"></app-article-list>
+        <app-article-list [articles]="articles()"></app-article-list>
       </div>
       <div class="sidebar">
         <h4>Popular Tags</h4>
@@ -19,6 +19,7 @@
         </div>
       </div>
     </div>
+    <app-pagination [totalPages]="100" [(pageActive)]="currentPage"></app-pagination>
     <app-footer></app-footer>
   </div>
 </div>
