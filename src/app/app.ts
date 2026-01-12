@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { dataService } from './shared/services/data.service';
 import { HeaderComponent } from './shared/components/header/header';
 
 @Component({
@@ -12,4 +13,12 @@ import { HeaderComponent } from './shared/components/header/header';
   `,
   styleUrls: ['./app.scss']
 })
-export class App {}
+export class App {
+  private dataService = inject(dataService);
+
+  constructor() {
+    if (localStorage.getItem('token')) {
+      this.dataService.getCurrentUser();
+    }
+  }
+}
