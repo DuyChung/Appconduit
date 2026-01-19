@@ -18,6 +18,9 @@ import { passwordStrongValidator } from '../../../validators/auth.validator';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrls: ['./register.scss'],
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './register.html',
+  styleUrls: ['./register.scss'],
 })
 export class RegisterComponent {
   private readonly dataService = inject(userService);

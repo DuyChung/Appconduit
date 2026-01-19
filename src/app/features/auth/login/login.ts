@@ -45,6 +45,7 @@ export class LoginComponent {
 
     if (this.loginForm.invalid) {
       form.reportValidity();
+      form.reportValidity();
       return;
     }
 
