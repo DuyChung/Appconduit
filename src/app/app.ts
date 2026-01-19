@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {  userService } from './shared/services/user.service';
 import { HeaderComponent } from './shared/components/header/header';
+import { AuthStore } from './shared/authstore/auth.store';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +11,12 @@ import { HeaderComponent } from './shared/components/header/header';
     <app-header></app-header>
     <router-outlet></router-outlet>
   `,
-  styleUrls: ['./app.scss']
+  styleUrls: ['./app.scss'],
 })
 export class App {
-  private dataService = inject(userService);
+  private readonly authStore = inject(AuthStore);
 
   constructor() {
-    if (localStorage.getItem('token')) {
-      this.dataService.getCurrentUser();
-    }
+    this.authStore.loadCurrentUser();
   }
 }

@@ -1,13 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { userService } from '../../../shared/services/user.service';
 import { finalize } from 'rxjs/operators';
 import { passwordStrongValidator } from '../../../validators/auth.validator';
@@ -15,7 +9,7 @@ import { passwordStrongValidator } from '../../../validators/auth.validator';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrls: ['./register.scss'],
 })
@@ -42,10 +36,8 @@ export class RegisterComponent {
   });
 
   submit(form: HTMLFormElement) {
-    this.resetState();
-    this.applyCustomErrors(form);
-
     this.registerForm.markAllAsTouched();
+    this.applyClientErrors(form);
 
     if (this.registerForm.invalid) {
       form.reportValidity();
@@ -53,6 +45,7 @@ export class RegisterComponent {
     }
 
     this.loading.set(true);
+    this.error.set(null);
 
     const { username, email, password } = this.registerForm.getRawValue();
 
@@ -64,50 +57,64 @@ export class RegisterComponent {
           localStorage.setItem('token', res.user.token);
           this.router.navigate(['/']);
         },
-        error: (err) => this.handleRegisterError(err),
+        error: (err) => this.handleRegisterError(err, form),
       });
   }
 
-  private resetState() {
-    this.error.set(null);
-  }
-
-  private applyCustomErrors(form: HTMLFormElement) {
-    this.setErrors(form, 'username', this.registerForm.controls.username, {
-      required: 'Username is required!',
+  private applyClientErrors(form: HTMLFormElement) {
+    this.setControlError(form, 'username', this.registerForm.controls.username, {
+      required: 'Username is required',
     });
 
-    this.setErrors(form, 'email', this.registerForm.controls.email, {
-      required: 'Email is required!',
-      email: 'Please enter a valid email address!',
+    this.setControlError(form, 'email', this.registerForm.controls.email, {
+      required: 'Email is required',
+      email: 'Please enter a valid email address',
     });
 
-    this.setErrors(form, 'password', this.registerForm.controls.password, {
-      required: 'Password cannot be empty!',
-      digitCount: 'Password must contain at least 3 digits!',
-      specialChar: 'Password must contain at least one special character!',
+    this.setControlError(form, 'password', this.registerForm.controls.password, {
+      required: 'Password cannot be empty',
+      digitCount: 'Password must contain at least 3 digits',
+      specialChar: 'Password must contain at least one special character',
     });
   }
 
-  private setErrors(
+  private handleRegisterError(err: any, form: HTMLFormElement) {
+    if (err.status === 422) {
+      this.registerForm.controls.email.setErrors({ server: true });
+
+      this.setServerError(form, 'email', 'Email or username already exists');
+    }
+  }
+
+  private setControlError(
     form: HTMLFormElement,
     controlName: string,
-    control: AbstractControl,
+    control: FormControl,
     messages: Record<string, string>,
   ) {
-    const input = form.querySelector(`input[formControlName="${controlName}"]`) as HTMLInputElement;
+    const input = form.querySelector(
+      `input[formControlName="${controlName}"]`,
+    ) as HTMLInputElement | null;
+
+    if (!input) return;
 
     input.setCustomValidity('');
 
-    if (!control.errors) return;
+    const errors = control.errors;
+    if (!errors) return;
 
-    const firstErrorKey = Object.keys(control.errors)[0];
-    input.setCustomValidity(messages[firstErrorKey] ?? '');
+    const errorKey = Object.keys(errors)[0];
+    input.setCustomValidity(messages[errorKey] ?? '');
   }
 
-  private handleRegisterError(err: any) {
-    if (err.status === 422) {
-      this.error.set('Email or username already exists');
-    }
+  private setServerError(form: HTMLFormElement, controlName: string, message: string) {
+    const input = form.querySelector(
+      `input[formControlName="${controlName}"]`,
+    ) as HTMLInputElement | null;
+
+    if (!input) return;
+
+    input.setCustomValidity(message);
+    form.reportValidity();
   }
 }

@@ -1,15 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { gmailValidator, passwordStrongValidator } from '../../../validators/auth.validator';
-import { userService } from '../../../shared/services/user.service';
+import { AuthStore } from '../../../shared/authstore/auth.store';
 
 @Component({
   selector: 'app-login',
@@ -19,12 +13,11 @@ import { userService } from '../../../shared/services/user.service';
   styleUrl: './login.scss',
 })
 export class LoginComponent {
-  private readonly dataService = inject(userService);
+  private readonly authStore = inject(AuthStore);
   private readonly router = inject(Router);
 
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
-  readonly emailNotRegistered = signal(false);
 
   readonly loginForm = new FormGroup({
     email: new FormControl('', {
@@ -36,12 +29,39 @@ export class LoginComponent {
       validators: [Validators.required, passwordStrongValidator],
     }),
   });
+  private setInputError(
+    form: HTMLFormElement,
+    controlName: string,
+    errors: Record<string, any> | null,
+    messages: Record<string, string>,
+  ) {
+    const input = form.querySelector(`input[formControlName="${controlName}"]`) as HTMLInputElement;
+
+    if (!input) return;
+
+    input.setCustomValidity('');
+
+    if (errors) {
+      const errorKey = Object.keys(errors)[0];
+      input.setCustomValidity(messages[errorKey] ?? '');
+    }
+  }
+
+  private applyCustomValidation(form: HTMLFormElement) {
+    this.setInputError(form, 'email', this.loginForm.controls.email.errors, {
+      required: 'Email is required',
+      email: 'Please enter a valid email address',
+      gmail: 'Please use a Gmail address (@gmail.com)',
+    });
+
+    this.setInputError(form, 'password', this.loginForm.controls.password.errors, {
+      required: 'Password cannot be empty',
+    });
+  }
 
   submit(form: HTMLFormElement) {
-    this.resetState();
-    this.applyCustomErrors(form);
-
     this.loginForm.markAllAsTouched();
+    this.applyCustomValidation(form);
 
     if (this.loginForm.invalid) {
       form.reportValidity();
@@ -49,58 +69,15 @@ export class LoginComponent {
     }
 
     this.loading.set(true);
+    this.error.set(null);
 
     const { email, password } = this.loginForm.getRawValue();
 
-    this.dataService.login(email, password).subscribe({
-      next: (res) => {
-        this.dataService['authStore'].setUser(res.user);
-        this.router.navigate(['/']);
-      },
-      error: (err) => this.handleLoginError(err),
+    this.authStore.login(email, password).subscribe({
+      next: () => this.router.navigate(['/home']),
+      error: () => this.error.set('Invalid email or password'),
       complete: () => this.loading.set(false),
     });
   }
-
-  private resetState() {
-    this.emailNotRegistered.set(false);
-    this.error.set(null);
-  }
-
-  private applyCustomErrors(form: HTMLFormElement) {
-    this.setErrors(form, 'email', this.loginForm.controls.email, {
-      required: 'Email is required !',
-      email: 'Please enter a valid email address !',
-      gmail: 'Please use a Gmail address (@) !',
-    });
-
-    this.setErrors(form, 'password', this.loginForm.controls.password, {
-      required: 'Password cannot be empty !',
-      digitCount: 'Password requires a minimum of 3 numeric characters !',
-      specialChar: 'Password requires at least one special character !',
-    });
-  }
-
-  private setErrors(
-    form: HTMLFormElement,
-    controlName: string,
-    control: AbstractControl,
-    messages: Record<string, string>,
-  ) {
-    const input = form.querySelector(`input[formControlName="${controlName}"]`) as HTMLInputElement;
-
-    input.setCustomValidity('');
-
-    if (!control.errors) return;
-
-    const firstErrorKey = Object.keys(control.errors)[0];
-    input.setCustomValidity(messages[firstErrorKey] ?? '');
-  }
-
-  private handleLoginError(err: any) {
-    if (err.status === 422 || err.status === 403) {
-      this.emailNotRegistered.set(true);
-    }
-    this.loading.set(false);
-  }
+  
 }

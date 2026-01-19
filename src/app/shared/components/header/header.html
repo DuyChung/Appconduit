@@ -1,4 +1,4 @@
-@let user = auth.user();
+@let user = authStore.user();
 <nav class="navbar">
   <div class="container">
     <div class="left">
@@ -18,7 +18,7 @@
         </a>
       </li>
 
-      @if (!auth.isLoggedIn()) {
+      @if (!authStore.isLoggedIn()) {
         <li>
           <a routerLink="/login">
             <i class="fa-solid fa-right-to-bracket"></i>

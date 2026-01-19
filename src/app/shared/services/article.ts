@@ -7,7 +7,7 @@ import { Article } from '../models/article.model';
   providedIn: 'root',
 })
 export class ArticleService {
-  private readonly API = `/articles`;
+  private readonly API = '/articles';
   private readonly http = inject(HttpClient);
 
   getArticles(

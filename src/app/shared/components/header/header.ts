@@ -1,19 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthStore } from '../../services/auth.store';
-import { userService } from '../../services/user.service';
+import { AuthStore } from '../../authstore/auth.store';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class HeaderComponent {
-  readonly auth = inject(AuthStore);
-  readonly dataService = inject(userService);
+  readonly authStore = inject(AuthStore);
 
   logout() {
-    this.dataService.logout();
+    this.authStore.logout();
   }
 }
