@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { userService } from '../../../shared/services/user.service';
 import { finalize } from 'rxjs/operators';
 import { passwordStrongValidator } from '../../../validators/auth.validator';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthStore } from '../../../shared/stores/auth.store';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,8 @@ import { passwordStrongValidator } from '../../../validators/auth.validator';
   styleUrls: ['./register.scss'],
 })
 export class RegisterComponent {
-  private readonly dataService = inject(userService);
+  private readonly authStore = inject(AuthStore);
+
   private readonly router = inject(Router);
 
   readonly loading = signal(false);
@@ -36,30 +38,30 @@ export class RegisterComponent {
   });
 
   submit(form: HTMLFormElement) {
-    this.registerForm.markAllAsTouched();
-    this.applyClientErrors(form);
+  this.registerForm.markAllAsTouched();
+  this.applyClientErrors(form);
 
-    if (this.registerForm.invalid) {
-      form.reportValidity();
-      return;
-    }
-
-    this.loading.set(true);
-    this.error.set(null);
-
-    const { username, email, password } = this.registerForm.getRawValue();
-
-    this.dataService
-      .register(username, email, password)
-      .pipe(finalize(() => this.loading.set(false)))
-      .subscribe({
-        next: (res) => {
-          localStorage.setItem('token', res.user.token);
-          this.router.navigate(['/']);
-        },
-        error: (err) => this.handleRegisterError(err, form),
-      });
+  if (this.registerForm.invalid) {
+    form.reportValidity();
+    return;
   }
+
+  this.loading.set(true);
+  this.error.set(null);
+
+  const { username, email, password } =
+    this.registerForm.getRawValue();
+
+  this.authStore
+    .register(username, email, password)
+    .pipe(finalize(() => this.loading.set(false)))
+    .subscribe({
+      next: () => this.router.navigate(['/']),
+      error: (err: HttpErrorResponse) =>
+        this.handleRegisterError(err, form),
+    });
+}
+
 
   private applyClientErrors(form: HTMLFormElement) {
     this.setControlError(form, 'username', this.registerForm.controls.username, {
@@ -78,12 +80,14 @@ export class RegisterComponent {
     });
   }
 
-  private handleRegisterError(err: any, form: HTMLFormElement) {
+  private handleRegisterError(err: HttpErrorResponse, form: HTMLFormElement): void {
     if (err.status === 422) {
       this.registerForm.controls.email.setErrors({ server: true });
-
       this.setServerError(form, 'email', 'Email or username already exists');
+      return;
     }
+
+    this.error.set('Something went wrong. Please try again.');
   }
 
   private setControlError(

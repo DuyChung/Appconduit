@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header';
-import { AuthStore } from './shared/authstore/auth.store';
+import { AuthStore } from './shared/stores/auth.store';
 
 @Component({
   selector: 'app-root',

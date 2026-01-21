@@ -3,7 +3,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { gmailValidator, passwordStrongValidator } from '../../../validators/auth.validator';
-import { AuthStore } from '../../../shared/authstore/auth.store';
+import { AuthStore } from '../../../shared/stores/auth.store';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,7 @@ export class LoginComponent {
       validators: [Validators.required, passwordStrongValidator],
     }),
   });
+
   private setInputError(
     form: HTMLFormElement,
     controlName: string,
@@ -73,11 +75,12 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.getRawValue();
 
-    this.authStore.login(email, password).subscribe({
-      next: () => this.router.navigate(['/home']),
-      error: () => this.error.set('Invalid email or password'),
-      complete: () => this.loading.set(false),
-    });
+    this.authStore
+      .login(email!, password!)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: () => this.router.navigate(['/home']),
+        error: () => this.error.set('Invalid email or password'),
+      });
   }
-  
 }
