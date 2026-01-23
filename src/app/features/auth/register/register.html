@@ -7,8 +7,12 @@
         <p class="text-center auth-link">
           <a routerLink="/login" class="text-xs-center"> Sign in to your account </a>
         </p>
-
-        <form [formGroup]="registerForm" (ngSubmit)="submit($event.target)"  >
+        @if (error()) {
+          <ul class="error-messages">
+            <li> . {{ error() }}</li>
+          </ul>
+        }
+        <form [formGroup]="registerForm" (ngSubmit)="submit($event.target)">
           <fieldset class="form-group">
             <input
               class="form-control form-control-lg"
@@ -35,12 +39,6 @@
               formControlName="password"
             />
           </fieldset>
-
-          @if (error()) {
-            <ul class="error-messages">
-              <li>{{ error() }}</li>
-            </ul>
-          }
 
           <button class="btn btn-lg btn-success pull-xs-right" type="submit" [disabled]="loading()">
             Sign up
