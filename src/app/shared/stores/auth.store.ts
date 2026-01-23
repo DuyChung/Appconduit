@@ -1,48 +1,85 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { tap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EMPTY } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { LOCAL_STORAGE_KEY } from '../constants/local-storage.constant';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { AuthErrorResponse } from '../models/auth-response.model';
+import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
   private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+
   readonly user = signal<User | null>(null);
+  readonly errorResponse = signal<AuthErrorResponse | null>(null);
+  readonly loading = signal(false);
 
-  login(email: string, password: string) {
-    return this.userService.login(email, password).pipe(
-      tap((res) => {
-        localStorage.setItem(LOCAL_STORAGE_KEY.token, res.user.token);
-        this.user.set(res.user);
-      }),
-    );
+  login(email: string, password: string): void {
+    this.loading.set(true);
+    this.errorResponse.set(null);
+
+    this.userService
+      .login(email, password)
+      .pipe(
+        tap((res) => {
+          localStorage.setItem(LOCAL_STORAGE_KEY.token, res.user.token);
+          this.user.set(res.user);
+          this.router.navigate(['/home']);
+        }),
+        catchError((err: HttpErrorResponse) => {
+          this.errorResponse.set(err.error?.errors ?? { error: ['Login failed'] });
+          throw err;
+        }),
+        finalize(() => this.loading.set(false)),
+      )
+      .subscribe();
   }
 
-  register(username: string, email: string, password: string) {
-    return this.userService.register(username, email, password).pipe(
-      tap((res) => {
-        localStorage.setItem(LOCAL_STORAGE_KEY.token, res.user.token);
-        this.setUser(res.user);
-      }),
-    );
+  resetErrorResponse() {
+    this.errorResponse.set(null);
+  }
+  register(username: string, email: string, password: string): void {
+    this.loading.set(true);
+    this.errorResponse.set(null);
+
+    this.userService
+      .register(username, email, password)
+      .pipe(
+        tap((res) => {
+          localStorage.setItem(LOCAL_STORAGE_KEY.token, res.user.token);
+          this.user.set(res.user);
+          this.router.navigate(['/home']);
+        }),
+        catchError((err: HttpErrorResponse) => {
+          this.errorResponse.set(err.error?.errors ?? { error: ['Register failed'] });
+          throw err;
+        }),
+        finalize(() => this.loading.set(false)),
+      )
+      .subscribe();
   }
 
-  loadCurrentUser() {
-    if (!localStorage.getItem(LOCAL_STORAGE_KEY.token)) {
+  loadCurrentUser(): void {
+    const token = localStorage.getItem(LOCAL_STORAGE_KEY.token);
+
+    if (!token) {
       this.clearUser();
       return;
     }
 
-    return this.userService.getCurrentUser().pipe(
-      tap({
-        next: (res) => this.setUser(res.user),
-        error: () => this.clearUser(),
-      }),
-    );
-  }
-
-  private setUser(user: User) {
-    this.user.set(user);
+    this.userService
+      .getCurrentUser()
+      .pipe(
+        tap({
+          next: (res) => this.user.set(res.user),
+          error: () => this.clearUser(),
+        }),
+      )
+      .subscribe();
   }
 
   logout() {

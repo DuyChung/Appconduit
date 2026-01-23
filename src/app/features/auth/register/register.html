@@ -7,12 +7,14 @@
         <p class="text-center auth-link">
           <a routerLink="/login" class="text-xs-center"> Sign in to your account </a>
         </p>
-        @if (error()) {
+        @if (errorResponse()) {
           <ul class="error-messages">
-            <li> . {{ error() }}</li>
+            @for (item of errorResponse()?.body; track $index) {
+              <li>{{ item }}</li>
+            }
           </ul>
         }
-        <form [formGroup]="registerForm" (ngSubmit)="submit($event.target)">
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
           <fieldset class="form-group">
             <input
               class="form-control form-control-lg"

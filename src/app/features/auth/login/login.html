@@ -8,13 +8,15 @@
           <a routerLink="/register">Need an account?</a>
         </p>
 
-        @if (error()) {
+        @if (errorResponse()) {
           <ul class="error-messages">
-            <li>{{ error() }}</li>
+            @for (err of errorResponse()?.body; track $index) {
+              <li>{{ err }}</li>
+            }
           </ul>
         }
 
-        <form [formGroup]="loginForm" (ngSubmit)="submit($event.target)">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
           <fieldset class="form-group">
             <input
               class="form-control form-control-lg"
@@ -33,12 +35,8 @@
             />
           </fieldset>
 
-          <button
-            class="btn btn-lg btn-primary pull-xs-right"
-            type="submit"
-            [disabled]="loading()"
-          >
-            Login
+          <button class="btn btn-lg btn-primary center-btn" type="submit" [disabled]="loading()">
+            Sign in
           </button>
         </form>
       </div>
