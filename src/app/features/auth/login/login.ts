@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { gmailValidator, passwordStrongValidator } from '../../../validators/auth.validator';
 import { AuthStore } from '../../../shared/stores/auth.store';
 import { finalize } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -80,7 +81,10 @@ export class LoginComponent {
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: () => this.router.navigate(['/home']),
-        error: () => this.error.set('Invalid email or password'),
+        error: (err: HttpErrorResponse) => {
+          const message = err.error?.message ?? 'Invalid email or password';
+          this.error.set(message);
+        },
       });
   }
 }
