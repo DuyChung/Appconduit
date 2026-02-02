@@ -66,15 +66,10 @@ export class AuthStore {
       return;
     }
 
-    this.userService
-      .getCurrentUser()
-      .pipe(
-        tap({
-          next: (res) => this.user.set(res.user),
-          error: () => this.clearUser(),
-        }),
-      )
-      .subscribe();
+    this.userService.getCurrentUser().subscribe({
+      next: (res) => this.user.set(res.user),
+      error: () => this.clearUser(),
+    });
   }
 
   logout() {
