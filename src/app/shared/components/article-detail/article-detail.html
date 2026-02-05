@@ -1,8 +1,18 @@
-@if (article(); as articleDetail) {
-  <div class="container">
-    <div class="avatar">
-      <img [src]="articleDetail.author.image || 'avatar.jfif'" alt="author avatar" />
-      <div>hellos</div>
+@if (article(); as a) {
+  <app-banner
+    [title]="a.title"
+    [author]="a.author.username"
+    [avatar]="a.author.image"
+    [createdAt]="a.createdAt | date: 'MMMM d, yyyy'"
+  ></app-banner>
+
+  <div class="container page">
+    <div class="row article-content">
+      <div class="col-md-8 offset-md-2">
+        {{ a.body }}
+      </div>
     </div>
   </div>
+} @else {
+  <p>loading . . .</p>
 }
