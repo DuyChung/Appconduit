@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Article } from '../models/article.model';
 
 @Injectable({
@@ -14,15 +14,17 @@ export class ArticleService {
     limit: number,
     offset: number,
   ): Observable<{ articles: Article[]; articlesCount: number }> {
-    return this.http.get<{ articles: Article[]; articlesCount: number }>(this.API, {
-      params: {
-        limit,
-        offset,
-      },
-    });
+    return this.http.get<{ articles: Article[]; articlesCount: number }>(
+      this.API,
+      {
+        params: { limit, offset },
+      }
+    );
   }
 
-  getArticleBySlug(slug: string): Observable<{ article: Article }> {
-    return this.http.get<{ article: Article }>(`${this.API}/${slug}`);
+  getArticleBySlug(slug: string): Observable<Article> {
+    return this.http
+      .get<{ article: Article }>(`${this.API}/${slug}`)
+      .pipe(map(res => res.article));
   }
 }
