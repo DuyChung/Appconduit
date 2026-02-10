@@ -1,19 +1,14 @@
 <div class="article-banner">
   <div class="container">
-    <h1>{{ title }}</h1>
+    <h1>{{ article.title }}</h1>
 
-    <div class="article-meta">
-      <img [src]="author.image || 'avatar.jfif'" />
-
-      <div class="info">
-        <a class="author">{{ author }}</a>
-        <span class="date">{{ createdAt }}</span>
-      </div>
-      <button class="btn btn-sm btn-outline-secondary">+ Follow {{ author }}</button>
-
-      <button class="btn btn-sm btn-outline-primary">❤️ Favorite</button>
-
-      <ng-content></ng-content>
-    </div>
+    <app-article-meta
+      [author]="article.author"
+      [createdAt]="article.createdAt "
+      [slug]="article.slug"
+      [favorited]="article.favorited"
+      [favoritesCount]="article.favoritesCount"
+    >
+    </app-article-meta>
   </div>
 </div>

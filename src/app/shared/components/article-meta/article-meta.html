@@ -1,0 +1,37 @@
+<div class="article-meta">
+  <img [src]="author.image || 'avatar.jfif'" />
+
+  <div class="info">
+    <a class="author">{{ author.username }}</a>
+    <span class="date">{{ createdAt | date:'medium' }}</span>
+  </div>
+
+  @if (isLoggedIn()) {
+    <button
+      class="follow-btn"
+      [class.active]="author.following"
+      (click)="toggleFollow()"
+    >
+      {{ author.following ? 'Unfollow' : 'Follow' }}
+      {{ author.followCount }}
+    </button>
+
+    <button
+      class="favorite-btn"
+      [class.active]="favorited"
+      (click)="toggleFavorite()"
+    >
+      ❤️ Favorite {{ favoritesCount }}
+    </button>
+  } @else {
+    <button class="follow-btn">
+      + Follow {{ author.followCount }}
+    </button>
+
+    <button class="favorite-btn">
+      ❤️ Favorite {{ favoritesCount }}
+    </button>
+  }
+
+  <ng-content></ng-content>
+</div>

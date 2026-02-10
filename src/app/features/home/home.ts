@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { TagList } from '../../shared/components/tag-list/tag-list';
 import { Footer } from '../../shared/components/footer/footer';
 import { ArticleListComponent } from '../../shared/components/article-list/article-list';
-import { ArticleService } from '../../shared/services/article';
+import { ArticleService } from '../../shared/services/article.service';
 import { Article } from '../../shared/models/article.model';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../shared/components/pagination/pagination';

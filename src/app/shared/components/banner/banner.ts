@@ -1,16 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Author } from '../../models/author.model';
+import { Article } from '../../models/article.model';
+import { ArticleMetaComponent } from '../article-meta/article-meta';
 
 @Component({
   selector: 'app-banner',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ArticleMetaComponent],
   templateUrl: './banner.html',
   styleUrl: './banner.scss',
 })
 export class BannerComponent {
-  @Input({ required: true }) title!: string;
-  @Input({ required: true }) author!: Author;
-  @Input() createdAt!: string;
+  @Input({ required: true }) article!: Article;
 }
