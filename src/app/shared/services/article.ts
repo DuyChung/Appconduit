@@ -1,14 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Article } from '../models/article.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ArticleService {
   private readonly API = '/articles';
-  private readonly http = inject(HttpClient);
 
   getArticles(
     limit: number,
