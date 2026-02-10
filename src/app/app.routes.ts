@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: 'article-detail/:slug',
     loadComponent: () =>
-      import('./shared/components/article-detail/article-detail').then((mod) => mod.ArticleDetail),
+      import('./shared/components/article-detail/article-detail').then((m) => m.ArticleDetailComponent),
   },
   {
     path: 'login',

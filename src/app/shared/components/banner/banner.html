@@ -1,0 +1,19 @@
+<div class="article-banner">
+  <div class="container">
+    <h1>{{ title }}</h1>
+
+    <div class="article-meta">
+      <img [src]="author.image || 'avatar.jfif'" />
+
+      <div class="info">
+        <a class="author">{{ author }}</a>
+        <span class="date">{{ createdAt }}</span>
+      </div>
+      <button class="btn btn-sm btn-outline-secondary">+ Follow {{ author }}</button>
+
+      <button class="btn btn-sm btn-outline-primary">❤️ Favorite</button>
+
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
