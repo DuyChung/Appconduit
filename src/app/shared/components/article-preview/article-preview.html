@@ -18,9 +18,11 @@
       <button class="like-btn">❤️ {{ article().favoritesCount }}</button>
     </div>
   </div>
-
-  <h2>{{ article().title }}</h2>
-  <p>{{ article().description }}</p>
-
+  <a [routerLink]="['/article-detail', article().slug]" class="title">
+    <h2>{{ article().title }}</h2>
+    <p>
+      {{ article().description }}
+    </p>
+  </a>
   <a [routerLink]="['/article-detail', article().slug]" class="read"> Read more </a>
 </div>

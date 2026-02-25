@@ -3,31 +3,28 @@
 
   <div class="container page">
     <div class="row article-content">
-      <div class="col-md-8 offset-md-2">
+      <div class="col-md-8">
         <p>{{ a.body }}</p>
+      </div>
 
+      <div class="col-md-4">
         @if (a.tagList.length > 0) {
           <ul class="tag-list">
             @for (tag of a.tagList; track tag) {
-              <li class="tag-default tag-pill tag-outline">
-                {{ tag }}
-              </li>
+              <app-tag-list [tag]="tag"></app-tag-list>
             }
           </ul>
         }
-
         <hr />
-
-        <app-article-meta
-          [author]="a.author"
-          [createdAt]="a.createdAt"
-          [slug]="a.slug"
-          [favorited]="a.favorited"
-          [favoritesCount]="a.favoritesCount"
-        ></app-article-meta>
       </div>
     </div>
-
+    <app-article-meta
+      [author]="a.author"
+      [createdAt]="a.createdAt"
+      [slug]="a.slug"
+      [favorited]="a.favorited"
+      [favoritesCount]="a.favoritesCount"
+    ></app-article-meta>
     <div class="comments">
       @if (!isLoggedIn()) {
         <p>
@@ -37,7 +34,7 @@
           to add comments on this article.
         </p>
       } @else {
-        cmt form
+        <p>{{ a.author.bio }}</p>
       }
     </div>
     <app-footer></app-footer>

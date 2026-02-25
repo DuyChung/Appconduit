@@ -7,13 +7,14 @@ import { Article } from '../../models/article.model';
 import { ArticleMetaComponent } from '../article-meta/article-meta';
 import { UserService } from '../../services/user.service';
 import { Footer } from "../footer/footer";
+import { TagList } from "../tag-list/tag-list";
 
 @Component({
   selector: 'app-article-detail,BannerComponent,ArticleMetaComponent,Footer',
   standalone: true,
   templateUrl: './article-detail.html',
   styleUrls: ['./article-detail.scss'],
-  imports: [BannerComponent, ArticleMetaComponent, Footer],
+  imports: [BannerComponent, ArticleMetaComponent, Footer, TagList],
 })
 export class ArticleDetailComponent {
   private readonly route = inject(ActivatedRoute);
