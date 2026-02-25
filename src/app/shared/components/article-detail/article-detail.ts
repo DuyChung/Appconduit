@@ -1,34 +1,31 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ArticleService } from '../../services/article';
+import { Component, inject, signal } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
+import { ArticleService } from '../../services/article.service';
+import { BannerComponent } from '../banner/banner';
 import { Article } from '../../models/article.model';
+import { ArticleMetaComponent } from '../article-meta/article-meta';
+import { UserService } from '../../services/user.service';
+import { Footer } from "../footer/footer";
 
 @Component({
-  selector: 'app-article-detail',
+  selector: 'app-article-detail,BannerComponent,ArticleMetaComponent,Footer',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './article-detail.html',
-  styleUrl: './article-detail.scss',
+  styleUrls: ['./article-detail.scss'],
+  imports: [BannerComponent, ArticleMetaComponent, Footer],
 })
-export class ArticleDetail implements OnInit {
+export class ArticleDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly articleService = inject(ArticleService);
-  slug = this.route.snapshot.paramMap.get('slug')!;
+  private readonly userService = inject(UserService);
+
   article = signal<Article | null>(null);
+  isLoggedIn = () => this.userService.isLoggedIn();
 
   ngOnInit() {
-    this.loadArticle();
-  }
-
-  loadArticle() {
-    this.articleService.getArticleBySlug(this.slug).subscribe({
-      next: (res) => {
-        this.article.set(res.article);
-      },
-      error: (err) => {
-        console.error(' Dây là lỗi load trang article:', err);
-      },
-    });
+    this.route.paramMap
+      .pipe(switchMap((params) => this.articleService.getArticleBySlug(params.get('slug')!)))
+      .subscribe((res) => this.article.set(res.article));
   }
 }

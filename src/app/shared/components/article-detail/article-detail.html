@@ -1,8 +1,47 @@
-@if (article(); as articleDetail) {
-  <div class="container">
-    <div class="avatar">
-      <img [src]="articleDetail.author.image || 'avatar.jfif'" alt="author avatar" />
-      <div>hellos</div>
+@if (article(); as a) {
+  <app-banner [article]="a"></app-banner>
+
+  <div class="container page">
+    <div class="row article-content">
+      <div class="col-md-8 offset-md-2">
+        <p>{{ a.body }}</p>
+
+        @if (a.tagList.length > 0) {
+          <ul class="tag-list">
+            @for (tag of a.tagList; track tag) {
+              <li class="tag-default tag-pill tag-outline">
+                {{ tag }}
+              </li>
+            }
+          </ul>
+        }
+
+        <hr />
+
+        <app-article-meta
+          [author]="a.author"
+          [createdAt]="a.createdAt"
+          [slug]="a.slug"
+          [favorited]="a.favorited"
+          [favoritesCount]="a.favoritesCount"
+        ></app-article-meta>
+      </div>
     </div>
+
+    <div class="comments">
+      @if (!isLoggedIn()) {
+        <p>
+          <a routerLink="/login">Sign in</a>
+          or
+          <a routerLink="/register">sign up</a>
+          to add comments on this article.
+        </p>
+      } @else {
+        cmt form
+      }
+    </div>
+    <app-footer></app-footer>
   </div>
+} @else {
+  <p class="container page">loading . . .</p>
 }

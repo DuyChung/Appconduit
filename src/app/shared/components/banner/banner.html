@@ -1,0 +1,14 @@
+<div class="article-banner">
+  <div class="container">
+    <h1>{{ article.title }}</h1>
+
+    <app-article-meta
+      [author]="article.author"
+      [createdAt]="article.createdAt "
+      [slug]="article.slug"
+      [favorited]="article.favorited"
+      [favoritesCount]="article.favoritesCount"
+    >
+    </app-article-meta>
+  </div>
+</div>

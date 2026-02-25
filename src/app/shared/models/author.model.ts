@@ -3,4 +3,6 @@ export interface Author {
   bio: string | null;
   image: string;
   following: boolean;
+  followCount: number;
+  favorited: number;
 }

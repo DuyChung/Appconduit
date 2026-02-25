@@ -1,14 +1,37 @@
-.container {
-  justify-content: center;
-  justify-items: center;
+.article-content {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.tag-list {
+  margin-top: 1rem;
+}
+
+app-article-meta {
   display: flex;
-  .avatar {
-    flex: 1;
-    height: calc(100vh - 80px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    color: #999;
-  }
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.comments {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e5e5;
+}
+
+.comments p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.comments a {
+  color: #5cb85c;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.comments a:hover {
+  text-decoration: underline;
 }
