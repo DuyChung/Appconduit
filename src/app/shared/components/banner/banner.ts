@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Article } from '../../models/article.model';
-import { ArticleMetaComponent } from '../article-meta/article-meta';
+import { ArticleMetaComponent } from '../../../features/article-detail/article-meta/article-meta';
 
 @Component({
   selector: 'app-banner',

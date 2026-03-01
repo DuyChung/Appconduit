@@ -1,8 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Author } from '../../models/author.model';
-import { UserService } from '../../services/user.service';
-import { ArticleActionService } from '../../services/article-action.service';
+import { Author } from '../../../shared/models/author.model';
+import { UserService } from '../../../shared/services/user.service';
+import { ArticleService } from '../../../shared/services/article.service';
 
 @Component({
   selector: 'app-article-meta',
@@ -20,7 +20,7 @@ export class ArticleMetaComponent {
   @Input() favoritesCount = 0;
 
   private readonly userService = inject(UserService);
-  private readonly actionService = inject(ArticleActionService);
+  private readonly actionService = inject(ArticleService);
 
   isLoggedIn = () => this.userService.isLoggedIn();
 
@@ -31,8 +31,8 @@ export class ArticleMetaComponent {
       ? this.actionService.unfollow(this.author.username)
       : this.actionService.follow(this.author.username);
 
-    req$.subscribe(profile => {
-      this.author.following = profile.following;
+    req$.subscribe(article => {
+      this.author.following = article.following;
     });
   }
 

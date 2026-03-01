@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { TagList } from '../../shared/components/tag-list/tag-list';
 import { Footer } from '../../shared/components/footer/footer';
 import { ArticleListComponent } from '../../shared/components/article-list/article-list';
@@ -16,27 +16,40 @@ import { PaginationComponent } from '../../shared/components/pagination/paginati
 })
 export class Home {
   currentPage = signal(1);
-  totalPages = signal(100);
+  totalPages = signal(0);
   articles = signal<Article[]>([]);
-  tags = ['frontend', 'backend', 'science', 'angular', 'typescript'];
+  tags = signal<string[]>([]);
   limit = 3;
-  page = 1;
 
   private articleService = inject(ArticleService);
 
-  ngOnInit() {
-    this.loadArticles();
+  constructor() {
+    effect(() => {
+      this.currentPage();
+      this.loadArticles();
+    });
   }
   loadArticles() {
-    const offset = (this.page - 1) * this.limit;
+    const offset = (this.currentPage() - 1) * this.limit;
 
     this.articleService.getArticles(this.limit, offset).subscribe({
       next: (res) => {
         this.articles.set(res.articles);
+
+        const pages = Math.ceil(res.articlesCount / this.limit);
+        this.totalPages.set(pages);
       },
-      error: (err) => {
-        console.error('Lỗi load articles:', err);
-      },
+    });
+  }
+
+  ngOnInit() {
+    this.loadTags();
+  }
+
+  loadTags() {
+    this.articleService.getTags().subscribe((tags) => {
+      console.log(tags);
+      this.tags.set(tags);
     });
   }
 }
