@@ -31,16 +31,15 @@ export class PaginationComponent {
     return [1, '...', current - 1, current, current + 1, '...', total];
   });
 
-   clickPage(page: number | string) {
-    if (typeof page !== 'number') return;
+  clickPage(page: number) {
     this.pageActive.set(page);
   }
 
   clickBackward() {
-    this.pageActive.update(v => Math.max(1, v - 1));
+    this.pageActive.update((v) => Math.max(1, v - 1));
   }
 
   clickForward() {
-    this.pageActive.update(v => Math.min(this.totalPages(), v + 1));
+    this.pageActive.update((v) => Math.min(this.totalPages(), v + 1));
   }
 }

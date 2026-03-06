@@ -1,5 +1,10 @@
 @if (article(); as a) {
-  <app-banner [article]="a"></app-banner>
+  <div class="article-banner">
+    <div class="container">
+      <h1>{{ a.title }}</h1>
+      <app-article-meta [article]="a"></app-article-meta>
+    </div>
+  </div>
 
   <div class="container page">
     <div class="row article-content">
@@ -11,20 +16,14 @@
         @if (a.tagList.length > 0) {
           <ul class="tag-list">
             @for (tag of a.tagList; track tag) {
-              <app-tag-list [tag]="tag"></app-tag-list>
+              <app-tags [tag]="tag"></app-tags>
             }
           </ul>
         }
         <hr />
       </div>
     </div>
-    <app-article-meta
-      [author]="a.author"
-      [createdAt]="a.createdAt"
-      [slug]="a.slug"
-      [favorited]="a.favorited"
-      [favoritesCount]="a.favoritesCount"
-    ></app-article-meta>
+  <app-article-meta [article]="a"></app-article-meta>
     <div class="comments">
       @if (!isLoggedIn()) {
         <p>

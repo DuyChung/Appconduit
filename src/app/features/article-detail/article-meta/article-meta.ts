@@ -1,8 +1,9 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, input, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Author } from '../../../shared/models/author.model';
-import { UserService } from '../../../shared/services/user.service';
+import { Article } from '../../../shared/models/article.model';
 import { ArticleService } from '../../../shared/services/article.service';
+import { ProfileService } from '../../../shared/services/profile.service';
+import { AuthStore } from '../../../shared/stores/auth.store';
 
 @Component({
   selector: 'app-article-meta',
@@ -12,40 +13,53 @@ import { ArticleService } from '../../../shared/services/article.service';
   styleUrl: './article-meta.scss',
 })
 export class ArticleMetaComponent {
-  @Input({ required: true }) author!: Author;
-  @Input({ required: true }) createdAt!: string;
 
-  @Input({ required: true }) slug!: string;
-  @Input() favorited = false;
-  @Input() favoritesCount = 0;
+  article = input.required<Article>();
 
-  private readonly userService = inject(UserService);
-  private readonly actionService = inject(ArticleService);
+  private readonly authStore = inject(AuthStore);
+  private readonly articleService = inject(ArticleService);
+  private readonly profileService = inject(ProfileService);
 
-  isLoggedIn = () => this.userService.isLoggedIn();
+  isLoggedIn = () => this.authStore.isLoggedIn();
+
+  following = signal(false);
+  favorited = signal(false);
+  favoritesCount = signal(0);
+
+  ngOnInit() {
+    const a = this.article();
+    this.following.set(a.author.following);
+    this.favorited.set(a.favorited);
+    this.favoritesCount.set(a.favoritesCount);
+  }
 
   toggleFollow() {
     if (!this.isLoggedIn()) return;
 
-    const req$ = this.author.following
-      ? this.actionService.unfollow(this.author.username)
-      : this.actionService.follow(this.author.username);
+    const username = this.article().author.username;
 
-    req$.subscribe(article => {
-      this.author.following = article.following;
+    const req$ = this.following()
+      ? this.profileService.unfollow(username)
+      : this.profileService.follow(username);
+
+    req$.subscribe(({ profile }) => {
+      this.following.set(profile.following);
     });
   }
 
   toggleFavorite() {
     if (!this.isLoggedIn()) return;
 
-    const req$ = this.favorited
-      ? this.actionService.unfavorite(this.slug)
-      : this.actionService.favorite(this.slug);
+    const { slug } = this.article();
 
-    req$.subscribe(article => {
-      this.favorited = article.favorited;
-      this.favoritesCount = article.favoritesCount;
+    const req$ = this.favorited()
+      ? this.articleService.unfavorite(slug)
+      : this.articleService.favorite(slug);
+
+    req$.subscribe(({ article }) => {
+      this.favorited.set(article.favorited);
+      this.favoritesCount.set(article.favoritesCount);
     });
   }
+  
 }

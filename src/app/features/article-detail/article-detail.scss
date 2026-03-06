@@ -4,12 +4,29 @@
   margin-bottom: 2rem;
 }
 
+.article-banner {
+  background: #222;
+  padding: 2.5rem 0;
+
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+}
 .tag-list {
   margin-top: 1rem;
   position: sticky;
 }
 
-app-article-meta {
+.article-banner app-article-meta {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+}
+
+.container.page > app-article-meta {
   display: flex;
   justify-content: center;
   margin: 2rem 0;

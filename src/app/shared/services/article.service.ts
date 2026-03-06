@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Article } from '../models/article.model';
 import { Author } from '../models/author.model';
 
@@ -18,36 +18,15 @@ export class ArticleService {
     });
   }
 
-  getArticleBySlug(slug: string): Observable<Article> {
-    return this.http
-      .get<{ article: Article }>(`${this.API}/${slug}`)
-      .pipe(map((res) => res.article));
+  getArticleBySlug(slug: string): Observable<{ article: Article }> {
+    return this.http.get<{ article: Article }>(`${this.API}/${slug}`);
   }
 
-  favorite(slug: string): Observable<Article> {
-    return this.http
-      .post<{ article: Article }>(`${this.API}/${slug}/favorite`, {})
-      .pipe(map((res) => res.article));
+  favorite(slug: string): Observable<{ article: Article }> {
+    return this.http.post<{ article: Article }>(`${this.API}/${slug}/favorite`, {});
   }
 
-  unfavorite(slug: string): Observable<Article> {
-    return this.http
-      .delete<{ article: Article }>(`${this.API}/${slug}/favorite`)
-      .pipe(map((res) => res.article));
-  }
-
-  follow(username: string): Observable<Author> {
-    return this.http
-      .post<{ profile: Author }>(`/profiles/${username}/follow`, {})
-      .pipe(map((res) => res.profile));
-  }
-
-  unfollow(username: string): Observable<Author> {
-    return this.http
-      .delete<{ profile: Author }>(`/profiles/${username}/follow`)
-      .pipe(map((res) => res.profile));
-  }
-  getTags(): Observable<string[]> {
-    return this.http.get<{ tags: string[] }>('/tags').pipe(map((res) => res.tags.slice(0, 20)));
+  unfavorite(slug: string): Observable<{ article: Article }> {
+    return this.http.delete<{ article: Article }>(`${this.API}/${slug}/favorite`);
   }
 }
