@@ -1,4 +1,4 @@
-import { Component, input, signal, inject } from '@angular/core';
+import { Component, input, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Article } from '../../../shared/models/article.model';
 import { ArticleService } from '../../../shared/services/article.service';
@@ -12,7 +12,7 @@ import { AuthStore } from '../../../shared/stores/auth.store';
   templateUrl: './article-meta.html',
   styleUrl: './article-meta.scss',
 })
-export class ArticleMetaComponent {
+export class ArticleMetaComponent implements OnInit {
 
   article = input.required<Article>();
 
