@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="page" (click)="clickBackward()"><</div>
+  <div class="page" [class.disabled]="pageActive() === 1" (click)="clickBackward()"><</div>
 
   @for (item of pages(); track $index) {
     @if (typeof item === 'number') {
@@ -10,5 +10,8 @@
       <span class="dots">...</span>
     }
   }
-  <div class="page" (click)="clickForward()">></div>
+
+  <div class="page" [class.disabled]="pageActive() === totalPages()" (click)="clickForward()">
+    >
+  </div>
 </div>

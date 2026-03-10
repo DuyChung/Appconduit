@@ -1,7 +1,8 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Article } from '../../models/article.model';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-article-preview',

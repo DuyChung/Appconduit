@@ -1,0 +1,43 @@
+@if (article(); as a) {
+  <div class="article-banner">
+    <div class="container">
+      <h1>{{ a.title }}</h1>
+      <app-article-meta [article]="a"></app-article-meta>
+    </div>
+  </div>
+
+  <div class="container page">
+    <div class="row article-content">
+      <div class="col-md-8">
+        <p>{{ a.body }}</p>
+      </div>
+
+      <div class="col-md-4">
+        @if (a.tagList.length > 0) {
+          <ul class="tag-list">
+            @for (tag of a.tagList; track tag) {
+              <app-tags [tag]="tag"></app-tags>
+            }
+          </ul>
+        }
+        <hr />
+      </div>
+    </div>
+  <app-article-meta [article]="a"></app-article-meta>
+    <div class="comments">
+      @if (!isLoggedIn()) {
+        <p>
+          <a routerLink="/login">Sign in</a>
+          or
+          <a routerLink="/register">sign up</a>
+          to add comments on this article.
+        </p>
+      } @else {
+        <p>{{ a.author.bio }}</p>
+      }
+    </div>
+    <app-footer></app-footer>
+  </div>
+} @else {
+  <p class="container page">loading . . .</p>
+}

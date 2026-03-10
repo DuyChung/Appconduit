@@ -1,8 +1,9 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '../../../shared/stores/auth.store';
+import { AuthResponse } from '../../../shared/models/auth-response.model';
 
 @Component({
   selector: 'app-login',

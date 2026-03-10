@@ -1,12 +1,11 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { LOCAL_STORAGE_KEY } from '../constants/local-storage.constant';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
-import { AuthErrorResponse } from '../models/auth-response.model';
+import { AuthErrorResponse, AuthResponse } from '../models/auth-response.model';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStore {
@@ -36,9 +35,6 @@ export class AuthStore {
       });
   }
 
-  resetErrorResponse() {
-    this.errorResponse.set(null);
-  }
   register(username: string, email: string, password: string): void {
     this.loading.set(true);
     this.errorResponse.set(null);
@@ -66,15 +62,24 @@ export class AuthStore {
       return;
     }
 
-    this.userService.getCurrentUser().subscribe({
-      next: (res) => this.user.set(res.user),
-      error: () => this.clearUser(),
-    });
+    this.loading.set(true);
+
+    this.userService
+      .getCurrentUser()
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (res) => this.user.set(res.user),
+        error: () => this.clearUser(),
+      });
   }
 
   logout() {
     localStorage.removeItem(LOCAL_STORAGE_KEY.token);
     this.clearUser();
+  }
+
+  resetErrorResponse() {
+    this.errorResponse.set(null);
   }
 
   private clearUser() {
