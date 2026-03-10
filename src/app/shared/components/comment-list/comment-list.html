@@ -1,0 +1,43 @@
+<div class="card comment-form">
+  <div class="card-block">
+    <textarea
+      class="form-control"
+      rows="3"
+      placeholder="Write a comment..."
+      [(ngModel)]="commentBody"
+    ></textarea>
+  </div>
+  <div class="card-footer">
+    <img class="comment-author-img" src="https://api.realworld.io/images/smiley-cyrus.jpeg" />
+
+    <button class="btn btn-sm btn-primary" (click)="postComment()">Post Comment</button>
+  </div>
+</div>
+@for (c of comments(); track c.id) {
+  <div class="card">
+    <div class="card-block">
+      <p class="card-text">
+        {{ c.body }}
+      </p>
+    </div>
+
+    <div class="card-footer">
+      <img
+        [src]="c.author.image || 'https://api.realworld.io/images/smiley-cyrus.jpeg'"
+        class="comment-author-img"
+      />
+
+      <a class="comment-author">
+        {{ c.author.username }}
+      </a>
+
+      <span class="date-posted">
+        {{ c.createdAt | date: 'mediumDate' }}
+      </span>
+
+      <span class="mod-options" (click)="deleteComment(c.id)">
+        <i class="ion-trash-a">&#xF5DE;</i>
+      </span>
+    </div>
+  </div>
+}
