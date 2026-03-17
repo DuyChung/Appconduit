@@ -17,12 +17,4 @@ import { UserService } from './shared/services/user.service';
 export class App {
   private readonly authStore = inject(AuthStore);
   private readonly userService = inject(UserService);
-  constructor() {
-    this.authStore.loadCurrentUser();
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      this.userService.getCurrentUser().subscribe();
-    }
-  }
 }

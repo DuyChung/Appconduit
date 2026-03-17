@@ -27,12 +27,6 @@ export class ArticleService {
       params['tag'] = query.tag;
     }
 
-    if (query?.feed) {
-      return this.http.get<{ articles: Article[]; articlesCount: number }>(`${this.API}/feed`, {
-        params,
-      });
-    }
-
     return this.http.get<{ articles: Article[]; articlesCount: number }>(this.API, { params });
   }
 

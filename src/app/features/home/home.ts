@@ -7,13 +7,13 @@ import { Article } from '../../shared/models/article.model';
 import { CommonModule } from '@angular/common';
 import { PaginationComponent } from '../../shared/components/pagination/pagination';
 import { TagService } from '../../shared/services/tag.service';
-import { UserService } from '../../shared/services/user.service';
 import { RouterLink } from '@angular/router';
+import { AuthStore } from '../../shared/stores/auth.store';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, Tags, Footer, ArticleListComponent, PaginationComponent,RouterLink],
+  imports: [CommonModule, Tags, Footer, ArticleListComponent, PaginationComponent, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -30,14 +30,12 @@ export class Home implements OnInit {
 
   private articleService = inject(ArticleService);
   private tagService = inject(TagService);
-  private userService = inject(UserService);
+  private userService = inject(AuthStore);
 
   isLoggedIn = this.userService.isLoggedIn;
 
   constructor() {
     effect(() => {
-      this.feedType();
-      this.currentPage();
       this.selectedTag();
       this.loadArticles();
     });
@@ -58,17 +56,18 @@ export class Home implements OnInit {
       }
 
       this.articleService.getMyFeed(this.limit, offset).subscribe((res) => {
-        this.articles.set(res.articles);
-        this.totalPages.set(Math.ceil(res.articlesCount / this.limit));
+        this.handleArticlesResponse(res);
       });
     } else {
       this.articleService.getArticles(this.limit, offset).subscribe((res) => {
-        this.articles.set(res.articles);
-        this.totalPages.set(Math.ceil(res.articlesCount / this.limit));
+        this.handleArticlesResponse(res);
       });
     }
   }
-
+  private handleArticlesResponse(res: { articles: Article[]; articlesCount: number }) {
+    this.articles.set(res.articles);
+    this.totalPages.set(Math.ceil(res.articlesCount / this.limit));
+  }
   changeFeed(type: 'global' | 'my') {
     this.feedType.set(type);
     this.selectedTag.set(null);

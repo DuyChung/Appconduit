@@ -9,7 +9,7 @@ import { Tags } from '../../shared/components/tags/tags';
 import { AuthStore } from '../../shared/stores/auth.store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DestroyRef } from '@angular/core';
-import { ArticleCommentsComponent } from '../../shared/components/comment-list/comment-list';
+import { ArticleCommentsComponent } from './comment-list/comment-list';
 
 @Component({
   selector: 'app-article-detail',
