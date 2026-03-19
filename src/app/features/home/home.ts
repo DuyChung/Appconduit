@@ -36,7 +36,6 @@ export class Home implements OnInit {
 
   constructor() {
     effect(() => {
-      this.selectedTag();
       this.loadArticles();
     });
   }

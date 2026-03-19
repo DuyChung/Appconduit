@@ -1,12 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {
-  Article,
-  ArticleQuery,
-  CommentResponse,
-  CreateCommentResponse,
-} from '../models/article.model';
+import { Article } from '../models/article.model';
+import { ArticleQuery, CommentResponse, CreateCommentResponse } from '../models/comment.model';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {

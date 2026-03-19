@@ -16,5 +16,5 @@ import { UserService } from './shared/services/user.service';
 })
 export class App {
   private readonly authStore = inject(AuthStore);
-  private readonly userService = inject(UserService);
+  constructor() {}
 }

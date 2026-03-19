@@ -9,14 +9,14 @@ import { Tags } from '../../shared/components/tags/tags';
 import { AuthStore } from '../../shared/stores/auth.store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DestroyRef } from '@angular/core';
-import { ArticleCommentsComponent } from './comment-list/comment-list';
+import { CommentListsComponent } from './comment-list/comment-list';
 
 @Component({
   selector: 'app-article-detail',
   standalone: true,
   templateUrl: './article-detail.html',
   styleUrls: ['./article-detail.scss'],
-  imports: [ArticleMetaComponent, Footer, Tags, ArticleCommentsComponent],
+  imports: [ArticleMetaComponent, Footer, Tags, CommentListsComponent],
 })
 export class ArticleDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -30,10 +30,8 @@ export class ArticleDetailComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap
       .pipe(
-        switchMap((params) =>
-          this.articleService.getArticleBySlug(params.get('slug')!)
-        ),
-        takeUntilDestroyed(this.destroyRef)
+        switchMap((params) => this.articleService.getArticleBySlug(params.get('slug')!)),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((res) => this.article.set(res.article));
   }
