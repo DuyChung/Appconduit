@@ -9,14 +9,14 @@ import { Tags } from '../../shared/components/tags/tags';
 import { AuthStore } from '../../shared/stores/auth.store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DestroyRef } from '@angular/core';
-import { CommentListsComponent } from './comment-list/comment-list';
+import { CommentListComponent } from './comment-list/comment-list';
 
 @Component({
   selector: 'app-article-detail',
   standalone: true,
   templateUrl: './article-detail.html',
   styleUrls: ['./article-detail.scss'],
-  imports: [ArticleMetaComponent, Footer, Tags, CommentListsComponent],
+  imports: [ArticleMetaComponent, Footer, Tags, CommentListComponent],
 })
 export class ArticleDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);

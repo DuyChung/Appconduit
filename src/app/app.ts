@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header';
 import { AuthStore } from './shared/stores/auth.store';
-import { UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -16,5 +15,7 @@ import { UserService } from './shared/services/user.service';
 })
 export class App {
   private readonly authStore = inject(AuthStore);
-  constructor() {}
+  constructor() {
+    this.authStore.loadCurrentUser();
+  }
 }

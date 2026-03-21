@@ -5,13 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { Comment } from '../../../shared/models/comment.model';
 
 @Component({
-  selector: 'app-comment-lists',
+  selector: 'app-comment-list',
   standalone: true,
   templateUrl: './comment-list.html',
   styleUrl: './comment-list.scss',
   imports: [DatePipe, FormsModule],
 })
-export class CommentListsComponent implements OnInit {
+export class CommentListComponent implements OnInit {
   private articleService = inject(ArticleService);
 
   slug = input.required<string>();
