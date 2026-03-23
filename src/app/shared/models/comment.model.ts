@@ -16,7 +16,4 @@ export interface CreateCommentResponse {
   comment: Comment;
 }
 
-export interface ArticleQuery {
-  tag?: string;
-  feed?: boolean;
-}
+
