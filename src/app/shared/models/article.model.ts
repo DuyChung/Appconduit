@@ -13,3 +13,15 @@ export interface Article {
   favoritesCount: number;
   author: Author;
 }
+export interface ArticleQuery {
+  tag?: string;
+  feed?: boolean;
+}
+export interface CreateArticleRequest {
+  article: {
+    title: string;
+    description: string;
+    body: string;
+    tagList: string[];
+  };
+}

@@ -28,6 +28,8 @@
         .author-name {
           font-weight: bold;
           font-size: 0.95rem;
+          color: #333;
+          text-decoration: none;
         }
 
         .date {
@@ -78,7 +80,7 @@
     font-size: 0.9rem;
   }
   .title:hover {
-    color:gray;
+    color: gray;
   }
   .read {
     color: gainsboro;
