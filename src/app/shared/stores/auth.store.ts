@@ -20,38 +20,28 @@ export class AuthStore {
     this.loading.set(true);
     this.errorResponse.set(null);
 
-    this.userService
-      .login(email, password)
-      .pipe(finalize(() => this.loading.set(false)))
-      .subscribe({
-        next: (res) => {
-          localStorage.setItem(LOCAL_STORAGE_KEY.token, res.user.token);
-          this.user.set(res.user);
-          this.router.navigate(['/home']);
-        },
-        error: (err: HttpErrorResponse) => {
-          this.errorResponse.set(err.error?.errors ?? { error: ['Login failed'] });
-        },
-      });
+    this.userService.login(email, password).subscribe({
+      next: (res) => {
+        this.handleAuthSuccess(res);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.handleError(err, 'Login failed');
+      },
+    });
   }
 
   register(username: string, email: string, password: string): void {
     this.loading.set(true);
     this.errorResponse.set(null);
 
-    this.userService
-      .register(username, email, password)
-      .pipe(finalize(() => this.loading.set(false)))
-      .subscribe({
-        next: (res) => {
-          localStorage.setItem(LOCAL_STORAGE_KEY.token, res.user.token);
-          this.user.set(res.user);
-          this.router.navigate(['/home']);
-        },
-        error: (err: HttpErrorResponse) => {
-          this.errorResponse.set(err.error?.errors ?? { error: ['Register failed'] });
-        },
-      });
+    this.userService.register(username, email, password).subscribe({
+      next: (res) => {
+        this.handleAuthSuccess(res);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.handleError(err, 'Register failed');
+      },
+    });
   }
 
   loadCurrentUser(): void {
@@ -64,13 +54,16 @@ export class AuthStore {
 
     this.loading.set(true);
 
-    this.userService
-      .getCurrentUser()
-      .pipe(finalize(() => this.loading.set(false)))
-      .subscribe({
-        next: (res) => this.user.set(res.user),
-        error: () => this.clearUser(),
-      });
+    this.userService.getCurrentUser().subscribe({
+      next: (res) => {
+        this.user.set(res.user);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.clearUser();
+        this.loading.set(false);
+      },
+    });
   }
 
   logout() {
@@ -80,6 +73,18 @@ export class AuthStore {
 
   resetErrorResponse() {
     this.errorResponse.set(null);
+  }
+
+  private handleAuthSuccess(res: AuthResponse) {
+    localStorage.setItem(LOCAL_STORAGE_KEY.token, res.user.token);
+    this.user.set(res.user);
+    this.loading.set(false);
+    this.router.navigate(['/home']);
+  }
+
+  private handleError(err: HttpErrorResponse, fallback: string) {
+    this.errorResponse.set(err.error?.errors ?? { error: [fallback] });
+    this.loading.set(false);
   }
 
   private clearUser() {

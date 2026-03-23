@@ -13,3 +13,7 @@ export interface Article {
   favoritesCount: number;
   author: Author;
 }
+export interface ArticleQuery {
+  tag?: string;
+  feed?: boolean;
+}

@@ -1,6 +1,5 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
 import { AuthResponse } from '../models/auth-response.model';
 
 @Injectable({ providedIn: 'root' })

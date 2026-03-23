@@ -15,7 +15,6 @@ import { AuthStore } from './shared/stores/auth.store';
 })
 export class App {
   private readonly authStore = inject(AuthStore);
-
   constructor() {
     this.authStore.loadCurrentUser();
   }
