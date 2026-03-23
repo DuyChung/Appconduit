@@ -3,15 +3,48 @@
   <p class="title">A place to share your knowledge.</p>
 </div>
 
-<div class="detail">
-  <div class="container">
-    <div class="home-page">
-      <div class="feed">
-        <h3 class="global-feed">Global Feed</h3>
-        <app-article-list [articles]="articles()"></app-article-list>
+<div class="container page">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="feed-toggle">
+        <ul class="nav nav-pills outline-active">
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="feedType() === 'my'" (click)="changeFeed('my')">
+              Your Feed
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [class.active]="feedType() === 'global'"
+              (click)="changeFeed('global')"
+            >
+              Global Feed
+            </a>
+          </li>
+        </ul>
       </div>
+      @if (feedType() === 'my' && !isLoggedIn()) {
+        <div class="article-preview">
+          <a routerLink="/login">Sign in</a> or
+          <a routerLink="/register">sign up</a>
+          to see your feed.
+        </div>
+      } @else if (articles().length === 0 && feedType() === 'my') {
+        <div class="article-preview">Articles not available.</div>
+      } @else {
+        <app-article-list [articles]="articles()"></app-article-list>
+      }
+      @if (totalPages() > 0) {
+        <app-pagination [totalPages]="totalPages()" [(pageActive)]="currentPage"></app-pagination>
+      }
+    </div>
+
+    <div class="col-md-3">
       <div class="sidebar">
-        <h4>Popular Tags</h4>
+        <p>Popular Tags</p>
+
         <div class="tag-list">
           @for (tag of tags(); track tag) {
             <app-tags [tag]="tag"></app-tags>
@@ -19,7 +52,7 @@
         </div>
       </div>
     </div>
-    <app-pagination [totalPages]="totalPages()" [(pageActive)]="currentPage"></app-pagination>
-    <app-footer></app-footer>
   </div>
 </div>
+
+<app-footer></app-footer>

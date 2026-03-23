@@ -4,11 +4,12 @@ import { Article } from '../../../shared/models/article.model';
 import { ArticleService } from '../../../shared/services/article.service';
 import { ProfileService } from '../../../shared/services/profile.service';
 import { AuthStore } from '../../../shared/stores/auth.store';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-article-meta',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink,],
   templateUrl: './article-meta.html',
   styleUrl: './article-meta.scss',
 })

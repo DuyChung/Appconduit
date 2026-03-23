@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Article } from '../models/article.model';
-import { Author } from '../models/author.model';
+import { ArticleQuery, Article, CreateArticleRequest } from '../models/article.model';
+import { CommentResponse, CreateCommentResponse } from '../models/comment.model';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
@@ -12,10 +12,24 @@ export class ArticleService {
   getArticles(
     limit: number,
     offset: number,
+    query?: ArticleQuery,
   ): Observable<{ articles: Article[]; articlesCount: number }> {
-    return this.http.get<{ articles: Article[]; articlesCount: number }>(this.API, {
-      params: { limit, offset },
-    });
+    let params: Record<string, string | number> = {
+      limit,
+      offset,
+    };
+
+    if (query?.tag) {
+      params['tag'] = query.tag;
+    }
+    if (query?.author) {
+      params['author'] = query.author;
+    }
+
+    if (query?.favorited) {
+      params['favorited'] = query.favorited;
+    }
+    return this.http.get<{ articles: Article[]; articlesCount: number }>(this.API, { params });
   }
 
   getArticleBySlug(slug: string): Observable<{ article: Article }> {
@@ -28,5 +42,26 @@ export class ArticleService {
 
   unfavorite(slug: string): Observable<{ article: Article }> {
     return this.http.delete<{ article: Article }>(`${this.API}/${slug}/favorite`);
+  }
+  getComments(slug: string) {
+    return this.http.get<CommentResponse>(`${this.API}/${slug}/comments`);
+  }
+  addComment(slug: string, body: string) {
+    return this.http.post<CreateCommentResponse>(`${this.API}/${slug}/comments`, {
+      comment: { body },
+    });
+  }
+
+  deleteComment(slug: string, id: number) {
+    return this.http.delete(`${this.API}/${slug}/comments/${id}`);
+  }
+
+  getMyFeed(limit: number, offset: number) {
+    return this.http.get<{ articles: Article[]; articlesCount: number }>(`${this.API}/feed`, {
+      params: { limit, offset },
+    });
+  }
+  createArticle(body: CreateArticleRequest) {
+    return this.http.post<{ article: Article }>(this.API, body);
   }
 }

@@ -4,9 +4,9 @@
       <img class="avatar" [src]="article().author.image || 'avatar.jfif'" alt="author avatar" />
 
       <div class="author-info">
-        <b class="author-name">
+        <a [routerLink]="['/profile', article().author.username]" class="author-name">
           {{ article().author.username }}
-        </b>
+        </a>
 
         <div class="date">
           {{ article().createdAt | date: 'mediumDate' }}

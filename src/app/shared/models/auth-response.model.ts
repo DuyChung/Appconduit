@@ -5,4 +5,7 @@ export interface AuthResponse {
 }
 export interface AuthErrorResponse {
   body: string[];
-}  
+}
+export interface AuthErrorArticleResponse {
+  errors: Record<string, string[]>;
+}

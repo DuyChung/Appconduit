@@ -23,7 +23,7 @@
         <hr />
       </div>
     </div>
-  <app-article-meta [article]="a"></app-article-meta>
+    <app-article-meta [article]="a"></app-article-meta>
     <div class="comments">
       @if (!isLoggedIn()) {
         <p>
@@ -36,6 +36,7 @@
         <p>{{ a.author.bio }}</p>
       }
     </div>
+    <app-comment-list [slug]="a.slug"></app-comment-list>
     <app-footer></app-footer>
   </div>
 } @else {

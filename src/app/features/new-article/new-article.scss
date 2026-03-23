@@ -1,0 +1,26 @@
+.editor-page {
+  margin-top: 2rem;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-control-lg {
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+
+button.btn-primary {
+  margin-top: 10px;
+  align-self: flex-end;
+  background-color: #4cae4c;
+}
+
