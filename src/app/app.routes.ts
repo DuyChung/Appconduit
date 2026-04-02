@@ -14,7 +14,7 @@ export const routes: Routes = [
       }
       return null;
     },
-    loadComponent: () => import('./features/profiles/profile').then((m) => m.ProfileComponent),
+    loadComponent: () => import('./features/profile/profile').then((m) => m.ProfileComponent),
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
@@ -42,5 +42,4 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/article-detail/article-detail').then((m) => m.ArticleDetailComponent),
   },
-
 ];

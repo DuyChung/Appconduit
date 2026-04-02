@@ -5,12 +5,12 @@
   [value]="tagValue"
   (input)="onInput($any($event.target).value)"
   (keydown.enter)="addTag(); $event.preventDefault()"
-  [disabled]="disabled"
+  [disabled]="false"
 />
 <div class="tag-list">
   @for (tag of tags; track tag; let i = $index) {
     <span class="tag-pill">
-      <button type="button" class="remove-btn" (click)="removeTag(i)"> x </button>
+      <button type="button" class="remove-btn" (click)="removeTag(i)" [disabled]="false">x</button>
       {{ tag }}
     </span>
   }
