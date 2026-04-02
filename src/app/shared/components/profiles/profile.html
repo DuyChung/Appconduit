@@ -1,0 +1,41 @@
+<div class="profile-page">
+  <div class="user-info">
+    <div class="container">
+      <img [src]="profile()?.image || 'avatar.jfif'" class="user-img" />
+      <h4>{{ profile()?.username }}</h4>
+
+      <p>{{ profile()?.bio }}</p>
+
+      <button class="btn btn-sm btn-outline-secondary">Follow {{ profile()?.username }}</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <h5>Total: {{ articleCount() }} articles</h5>
+
+        @for (article of articles(); track article.slug) {
+          <div class="article-preview">
+            <div class="article-meta">
+              <img [src]="article.author.image" />
+              <div class="info">
+                <span class="author">{{ article.author.username }}</span>
+                <span class="date">{{ article.createdAt }}</span>
+              </div>
+            </div>
+
+            <h1>{{ article.title }}</h1>
+            <p>{{ article.description }}</p>
+
+            <ul class="tag-list">
+              @for (tag of article.tagList; track tag) {
+                <li class="tag-pill">{{ tag }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

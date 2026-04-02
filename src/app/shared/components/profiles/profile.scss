@@ -1,0 +1,26 @@
+.profile-page .user-info {
+  text-align: center;
+  background: #f3f3f3;
+  padding: 2rem 0;
+}
+
+.user-img {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.article-preview {
+  border-top: 1px solid #ddd;
+  padding: 1.5rem 0;
+}
+
+.article-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tag-list {
+  display: flex;
+  gap: 5px;
+}

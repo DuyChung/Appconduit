@@ -42,5 +42,4 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/article-detail/article-detail').then((m) => m.ArticleDetailComponent),
   },
-
 ];
