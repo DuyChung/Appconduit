@@ -10,7 +10,7 @@ import { AuthStore } from '../../shared/stores/auth.store';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './profile.html',
   styleUrls: ['./profile.scss'],
 })
@@ -20,29 +20,29 @@ export class ProfileComponent implements OnInit {
   private articleService = inject(ArticleService);
   private authStore = inject(AuthStore);
 
-  username = '';
+  username = signal('');
   articleCount = signal(0);
   profile = signal<Profile | null>(null);
   articles = signal<Article[]>([]);
-isMyProfile = computed(() => {
-  const currentUser = this.authStore.user();
-  return currentUser?.username === this.username;
-});
+  isMyProfile = computed(() => {
+    const currentUser = this.authStore.user();
+    return currentUser?.username === this.username();
+  });
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.username = params.get('username') ?? '';
+      this.username.set(params.get('username') ?? '');
       this.loadData();
     });
   }
 
   loadData() {
-    if (!this.username) return;
+    if (!this.username()) return;
 
-    this.profileService.getProfile(this.username).subscribe((res) => {
+    this.profileService.getProfile(this.username()).subscribe((res) => {
       this.profile.set(res.profile);
     });
 
-    this.articleService.getArticles(10, 0, { author: this.username }).subscribe((res) => {
+    this.articleService.getArticles(10, 0, { author: this.username() }).subscribe((res) => {
       this.articles.set(res.articles);
       this.articleCount.set(res.articlesCount);
     });
