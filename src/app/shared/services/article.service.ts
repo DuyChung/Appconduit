@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ArticleQuery,Article } from '../models/article.model';
-import {  CommentResponse, CreateCommentResponse } from '../models/comment.model';
+import { ArticleQuery, Article, CreateArticleRequest } from '../models/article.model';
+import { CommentResponse, CreateCommentResponse } from '../models/comment.model';
 
 @Injectable({ providedIn: 'root' })
 export class ArticleService {
@@ -22,7 +22,13 @@ export class ArticleService {
     if (query?.tag) {
       params['tag'] = query.tag;
     }
+    if (query?.author) {
+      params['author'] = query.author;
+    }
 
+    if (query?.favorited) {
+      params['favorited'] = query.favorited;
+    }
     return this.http.get<{ articles: Article[]; articlesCount: number }>(this.API, { params });
   }
 
@@ -54,5 +60,8 @@ export class ArticleService {
     return this.http.get<{ articles: Article[]; articlesCount: number }>(`${this.API}/feed`, {
       params: { limit, offset },
     });
+  }
+  createArticle(body: CreateArticleRequest) {
+    return this.http.post<{ article: Article }>(this.API, body);
   }
 }

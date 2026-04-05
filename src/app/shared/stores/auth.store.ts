@@ -1,6 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { finalize } from 'rxjs/operators';
 import { LOCAL_STORAGE_KEY } from '../constants/local-storage.constant';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';

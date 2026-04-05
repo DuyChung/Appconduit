@@ -28,7 +28,7 @@ export class RegisterComponent implements OnDestroy {
     }),
     password: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, passwordStrongValidator],
+      validators: [Validators.required],
     }),
   });
 

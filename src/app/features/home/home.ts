@@ -32,8 +32,7 @@ export class Home implements OnInit {
   private tagService = inject(TagService);
   private userService = inject(AuthStore);
 
-  isLoggedIn = this.userService.isLoggedIn;
-
+  readonly isLoggedIn = () => this.userService.isLoggedIn();
   constructor() {
     effect(() => {
       this.loadArticles();
