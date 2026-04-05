@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       this.username.set(params.get('username') || '');
+      this.loadData();
     });
   }
   loadData() {
