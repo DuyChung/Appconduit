@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, DestroyRef } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Profile } from '../../shared/models/profile.model';
 import { Article } from '../../shared/models/article.model';
@@ -6,6 +6,7 @@ import { ProfileService } from '../../shared/services/profile.service';
 import { ArticleService } from '../../shared/services/article.service';
 import { CommonModule } from '@angular/common';
 import { AuthStore } from '../../shared/stores/auth.store';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,8 @@ export class ProfileComponent implements OnInit {
   private articleService = inject(ArticleService);
   private authStore = inject(AuthStore);
 
+  private destroyRef = inject(DestroyRef);
+
   username = signal('');
   articleCount = signal(0);
   profile = signal<Profile | null>(null);
@@ -29,12 +32,10 @@ export class ProfileComponent implements OnInit {
     return currentUser?.username === this.username();
   });
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.username.set(params.get('username') ?? '');
-      this.loadData();
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      this.username.set(params.get('username') || '');
     });
   }
-
   loadData() {
     if (!this.username()) return;
 

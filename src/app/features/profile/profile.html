@@ -13,7 +13,8 @@
         </button>
       } @else {
         <button class="btn btn-sm btn-outline-secondary">
-          <i class="ion-plus-round"></i>
+          <i [class]="profile()?.following ? 'ion-minus-round' : 'ion-plus-round'"></i>
+          &nbsp;
           {{ profile()?.following ? 'Unfollow' : 'Follow' }} {{ profile()?.username }}
         </button>
       }
