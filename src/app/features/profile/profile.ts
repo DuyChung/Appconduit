@@ -40,13 +40,19 @@ export class ProfileComponent implements OnInit {
   loadData() {
     if (!this.username()) return;
 
-    this.profileService.getProfile(this.username()).subscribe((res) => {
-      this.profile.set(res.profile);
-    });
+    this.profileService
+      .getProfile(this.username())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.profile.set(res.profile);
+      });
 
-    this.articleService.getArticles(10, 0, { author: this.username() }).subscribe((res) => {
-      this.articles.set(res.articles);
-      this.articleCount.set(res.articlesCount);
-    });
+    this.articleService
+      .getArticles(10, 0, { author: this.username() })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.articles.set(res.articles);
+        this.articleCount.set(res.articlesCount);
+      });
   }
 }
