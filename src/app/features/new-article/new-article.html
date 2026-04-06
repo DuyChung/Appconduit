@@ -1,0 +1,55 @@
+<div class="editor-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-10 offset-md-1 col-xs-12">
+        @if (errorResponse()) {
+          <ul class="error-messages">
+            @for (item of errorResponse()?.body; track $index) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        }
+        <form [formGroup]="articleForm" (ngSubmit)="submit()">
+          <fieldset>
+            <fieldset class="form-group">
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="Article Title"
+                formControlName="title"
+              />
+            </fieldset>
+
+            <fieldset class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="What's this article about?"
+                formControlName="description"
+              />
+            </fieldset>
+
+            <fieldset class="form-group">
+              <textarea
+                class="form-control"
+                rows="8"
+                placeholder="Write your article (in markdown)"
+                formControlName="body"
+              ></textarea>
+            </fieldset>
+            <fieldset class="form-group">
+              <app-tag-list-control formControlName="tagList"></app-tag-list-control>
+            </fieldset>
+            <button
+              class="btn btn-lg btn-primary pull-xs-right"
+              type="submit"
+              [disabled]="articleForm.invalid || loading()"
+            >
+              {{ loading() ? 'Publishing...' : 'Publish Article' }}
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

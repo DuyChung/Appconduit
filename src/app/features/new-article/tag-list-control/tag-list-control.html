@@ -1,0 +1,17 @@
+<input
+  type="text"
+  class="form-control"
+  placeholder="Enter tags"
+  [value]="tagValue"
+  (input)="onInput($any($event.target).value)"
+  (keydown.enter)="addTag(); $event.preventDefault()"
+  [disabled]="disabled"
+/>
+<div class="tag-list">
+  @for (tag of tags; track tag; let i = $index) {
+    <span class="tag-pill">
+      <button type="button" class="remove-btn" (click)="removeTag(i)" [disabled]="disabled">x</button>
+      {{ tag }}
+    </span>
+  }
+</div>

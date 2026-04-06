@@ -3,7 +3,9 @@
   <img [src]="article().author.image || 'avatar.jfif'" />
 
   <div class="info">
-    <a class="author">{{ article().author.username }}</a>
+    <a class="author" [routerLink]="['/@' + article().author.username]">
+      {{ article().author.username }}
+    </a>
     <span class="date">{{ article().createdAt | date:'medium' }}</span>
   </div>
 

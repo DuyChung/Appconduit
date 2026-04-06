@@ -33,13 +33,13 @@
         </li>
       } @else {
         <li>
-          <a routerLink="/editor">
+          <a routerLink="/new-article">
             <i class="fa-solid fa-pen-to-square"></i>
             New Article
           </a>
         </li>
         <li>
-          <a routerLink="/profile">
+          <a [routerLink]="['/@' + user?.username]">
             <i class="fa-solid"></i>
             <img class="user-pic" [src]="user?.image || 'avatar.jfif'" alt="user avatar" />
             {{ user?.username }}

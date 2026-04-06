@@ -16,4 +16,14 @@ export interface Article {
 export interface ArticleQuery {
   tag?: string;
   feed?: boolean;
+  author?: string;
+  favorited?: string;
+}
+export interface CreateArticleRequest {
+  article: {
+    title: string;
+    description: string;
+    body: string;
+    tagList: string[];
+  };
 }

@@ -1,0 +1,33 @@
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: #aaabac;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  gap: 6px;
+}
+
+.remove-btn {
+  border: none;
+  background: transparent;
+  color: #ddd;
+  margin-right: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  text-decoration: none;
+  padding: 0;
+}
+
+.remove-btn:hover {
+  text-decoration: none;
+}
